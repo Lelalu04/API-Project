@@ -1,3 +1,17 @@
-.post-container {
-  border: 2px solid red;
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.container .accordion-item .accordion-header {
+  margin-bottom: 0px;
+}
+.container .accordion-item .hide {
+  display: none;
+}
+.container .accordion-item .show {
+  display: block;
+}
+.container .accordion-item .accordion-button {
+  width: 100%;
+  height: 50px;
 }/*# sourceMappingURL=style.css.map */
