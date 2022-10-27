@@ -1,0 +1,17 @@
+.container-user {
+  display: flex;
+  flex-direction: column;
+}
+.container-user .accordion-item .accordion-header {
+  margin-bottom: 0px;
+}
+.container-user .accordion-item .hide {
+  display: none;
+}
+.container-user .accordion-item .show {
+  display: block;
+}
+.container-user .accordion-item .accordion-button {
+  width: 100%;
+  height: 50px;
+}/*# sourceMappingURL=user.css.map */

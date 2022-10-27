@@ -1,25 +1,57 @@
-let container = document.querySelector(`.container`)
+let container = document.querySelector(`.container-posts`)
+
+
+
 
 fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
     .then(res => res.json())
     .then(posts => {
         posts.map(post => {
             let postItem = createdivAccordionItem()
-
             let postH2 = createdivAccordionHeader('h2')
-
             let postButton = createdAccordionButton()
             postButton.textContent = post.title.toUpperCase()
 
             let postCollapse = createdAccordionCollapse()
-
             hite_showAccordionCollapse(postButton, postCollapse)
-            
             let postBody = createdAccordionBody()
 
-            let nameP = createElementP(`Name: ${post.user.name}`)
+            let nameP = createElementP(`Name: `)
+            let nameSpan = createElement('span')
+            let nameA = createElement('a', `${post.user.name}`)
+            nameA.setAttribute(`href`, `./user.html`)
+            nameA.setAttribute(`id`, `1`)
+            // nameA.setAttribute(`id`, `${post.user.id}`)
+            let albumsButton = createElement('button', `Albums:`)
+            let albumsbodyDiv = createElement('div')
 
-            postBody.append(createElementP(post.body), nameP)
+            albumsButton.addEventListener(`click`, () => {
+                fetch(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
+                    .then(res => res.json())
+                    .then(albums => {
+                        albums.map((album, index) => {
+                            console.log(album)
+                            
+                            let albumsP = createElement(`p`, `${index + 1}. `)
+                            let albumsSpan = createElement(`span`)
+                            let albumsA = createElement(`a`, `${album.title}.`)
+                            albumsA.setAttribute(`href`, `./album.html`)
+
+                            let albumsImg = createElement(`img`)
+                            albumsImg.setAttribute(`src`, album.photos[0].thumbnailUrl)
+                            albumsImg.setAttribute(`alt`, album.photos[0].title)
+                            
+                        albumsSpan.append(albumsA)
+                        albumsP.append(albumsSpan)
+                        albumsbodyDiv.append(albumsP, albumsImg)
+                        })
+                    })
+            })
+
+
+            nameP.append(nameSpan)
+            nameSpan.append(nameA)
+            postBody.append(createElementP(post.body), nameP, albumsButton, albumsbodyDiv)
             postCollapse.append(postBody)
             postH2.append(postButton)
             postItem.append(postH2, postCollapse)
@@ -43,8 +75,8 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
                 let commentA = createElementA(comment.email)
 
                 commentH3.textContent = comment.name.toUpperCase()
-                // commentsP.textContent = comment.body
-                commentBody.append(commentP,commentA)
+
+                commentBody.append(commentP, commentA)
                 commentCollapse.append(commentBody)
                 commentButton.append(commentH3)
                 commentItem.append(commentButton, commentCollapse)
@@ -101,6 +133,11 @@ function hite_showAccordionCollapse(button, element) {
         }
     })
 }
+function createElement(element, text) {
+    let variable = document.createElement(element)
+    variable.textContent = text
+    return variable
+}
 
 
 
@@ -144,3 +181,55 @@ function hite_showAccordionCollapse(button, element) {
 //                     container.append(div)
 //                 })
 //     })
+
+
+
+
+
+
+// fetch(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums`)
+// .then(res => res.json())
+// .then(albums => {
+//     console.log(albums)
+//     albums.map(album => {
+        
+        
+//         let albumsP = createElement(`p`, `${album.id}. `)
+//         let albumsSpan = createElement(`span`)
+//         let albumsA = createElement(`a`, `${album.title}.`)
+//         albumsA.setAttribute(`href`, `./album.html`)
+//         // let albumsUserName = createElement(`p`, `${album.id}. `)
+        
+//     console.log(album.id)
+        
+//         fetch(`https://jsonplaceholder.typicode.com/albums/` + album.id + `/photos`)
+//             .then(res => res.json())
+//             .then(photos => {
+//                 console.log(photos[0].thumbnailUrl)
+//                 // albums.map(album => {
+//                     // photos.map(photo => {
+//                     //     console.log(photo[0])
+//                     // })
+//                     let albumsImg = createElement(`img`)
+//                     albumsImg.setAttribute(`src`, photos[0].thumbnailUrl)
+//                     albumsImg.setAttribute(`alt`, photos[0].title)
+
+                   
+//                 //     let albumsSpan = createElement(`span`)
+
+//                 //     let albumsA = createElement(`a`, `${album.title}.`)
+//                 //     albumsA.setAttribute(`href`, `./album.html`)
+
+//                 //     albumsSpan.append(albumsA)
+//                 //     albumsP.append(albumsSpan)
+//                 //     albumsbodyDiv.append(albumsP)
+//                 // })
+                
+//             albumsSpan.append(albumsA)
+//             albumsP.append(albumsSpan)
+//             albumsbodyDiv.append(albumsP,albumsImg)
+//             })
+//     })
+
+
+// })
