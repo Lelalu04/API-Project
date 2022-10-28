@@ -1,8 +1,15 @@
 let container = document.querySelector(`.container-user`)
 // let userIds = window.parent.document.getElementById(`1`)
 // console.log(userIds)
+let queryParams = document.location.search;
+let urlParams = new URLSearchParams(queryParams)
+let userId = urlParams.get(`user_id`)
 
-let userId = 1
+
+console.log(queryParams)
+console.log(urlParams)
+console.log(userId)
+// let userId = 1
 
 fetch(`https://jsonplaceholder.typicode.com/users/` + userId)
     .then(res => res.json())
