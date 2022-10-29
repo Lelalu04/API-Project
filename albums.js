@@ -1,22 +1,15 @@
-let container = document.querySelector(`.container-album`)
+let container = document.querySelector(`.container-albums`)
 
-let queryParams = document.location.search;
-let urlParams = new URLSearchParams(queryParams)
-let userId = urlParams.get(`user_id`)
-let userName = urlParams.get(`user_name`)
-
-
-console.log(userId)
-console.log(userName)
-
-fetch(`https://jsonplaceholder.typicode.com/users/` + userId + `/albums?_embed=photos`)
-    .then(res => res.json())
-    .then(albums => {
-        console.log(albums)
+fetch(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`)
+.then(res => res.json())
+.then(albums => {
+        let h2 = createElement(`h2`, `Albums List: `)
+        let h2Span = createElement(`span`,`(${[...albums].length})`)
+        h2.append(h2Span)
+        container.append(h2)
         let albumsAccordion = createdivElement_AddClass(`div`, `accordion`)
         albumsAccordion.setAttribute(`id`, `accordion-albums`)
         albums.map(album => {
-
             let albumAccordionItem = createdivAccordionItem()
             let albumAccordionH3 = createdivAccordionHeader(`h2`, `album_${album.id}`)
             let albumAccordionButton = createdAccordionButton(`album_${album.id}`)
@@ -24,35 +17,50 @@ fetch(`https://jsonplaceholder.typicode.com/users/` + userId + `/albums?_embed=p
             let albumAccordionCollapse = createdAccordionCollapse(`album_${album.id}`, `albums`, `album_${album.id}`)
             let albumAccordionBody = createdAccordionBody()
 
-            let albumsImg;
-            albumAccordionButton.addEventListener(`click`, () => {
-                if(!albumsImg){
-// ar koda pernaujo uzkrauna?
-                }
-            })
-            album.photos.map(photo => {
-                console.log(photo)
-                albumsImg = createElement(`img`)
-                albumsImg.setAttribute(`src`, photo.thumbnailUrl)
-                albumsImg.setAttribute(`alt`, photo.title)
+            let albumAutorP = createElement(`p`, `Autor: `)
+            let albumAutorSpan = createElement(`span`)
+            let albumAutorA = createElement('a', `${album.user.name}`)
+            albumAutorA.setAttribute(`href`, `./user.html?user_id=${album.user.id}`)
+
+            // let albumAutorP = createElement(`p`, `Autor: `)
+            // let albumAutorSpan = createElement(`span`)
+            let albumfullInfoA = createElement('a', `Link To Full Album`)
+            albumfullInfoA.setAttribute(`href`, `./album.html?user_id=${album.user.id}&user_name=${album.user.name}`)
+
+            console.log(album.photos.length)
+            console.log(...album.photos)
+            let albumPhotoRandom = Math.floor(Math.random() * album.photos.length)
+            let albumsImg = createElement(`img`)
+            albumsImg.setAttribute(`src`, [...album.photos][albumPhotoRandom].thumbnailUrl)
+            albumsImg.setAttribute(`alt`, [...album.photos][albumPhotoRandom].title)
+            console.log([...album.photos][1])
+            
+            albumAutorSpan.append(albumAutorA)
+            albumAutorP.append(albumAutorSpan)
+            albumAccordionBody.append(albumfullInfoA, albumAutorP, albumsImg)
+
+//             albumAccordionButton.addEventListener(`click`, () => {
+//                 if(!albumsImg){
+// // ar koda pernaujo uzkrauna?
+// album.photos.map(photo => {
+//     // console.log(photo)
+//     albumsImg = createElement(`img`)
+//     albumsImg.setAttribute(`src`, photo.thumbnailUrl)
+//     albumsImg.setAttribute(`alt`, photo.title)
+
     
-                
-                albumAccordionBody.append(albumsImg)
-            })
+//     albumAccordionBody.append(albumsImg)
+// })
+//                 }
+//             })
             albumAccordionCollapse.append(albumAccordionBody)
             albumAccordionH3.append(albumAccordionButton)
             albumAccordionItem.append(albumAccordionH3, albumAccordionCollapse)
             albumsAccordion.append(albumAccordionItem)
         })
-        let albumAutorP = createElement(`p`, `Autor: `)
-        let albumAutorSpan = createElement(`span`)
-        let albumAutorA = createElement('a', `${userName}`)
-        albumAutorA.setAttribute(`href`, `./user.html?user_id=${userId}`)
-
-        albumAutorSpan.append(albumAutorA)
-            albumAutorP.append(albumAutorSpan)
+       
             
-        container.append(albumAutorP, albumsAccordion)
+        container.append(albumsAccordion)
     })
 
     function createdivAccordionItem() {

@@ -1,4 +1,4 @@
-let container = document.querySelector(`.container-posts`)
+let container = document.querySelector(`.container-home`)
 let containerAccordion = document.createElement(`div`)
 containerAccordion.setAttribute(`class`, `accordion`)
 containerAccordion.setAttribute(`id`, `accordion-post`)
