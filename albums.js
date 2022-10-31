@@ -25,7 +25,7 @@ fetch(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`)
             // let albumAutorP = createElement(`p`, `Autor: `)
             // let albumAutorSpan = createElement(`span`)
             let albumfullInfoA = createElement('a', `Link To Full Album`)
-            albumfullInfoA.setAttribute(`href`, `./album.html?user_id=${album.user.id}&user_name=${album.user.name}`)
+            albumfullInfoA.setAttribute(`href`, `./album.html?album_id=${album.id}&user_name=${album.user.name}`)
 
             console.log(album.photos.length)
             console.log(...album.photos)

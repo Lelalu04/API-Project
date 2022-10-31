@@ -7,6 +7,23 @@ let navBarobj = {
     links: [`index.html`, `posts.html`, `users.html`, `albums.html`]
 }
 
+let searchForm = createElement(`form`)
+let inputText = createElement(`input`)
+inputText.type = `text`
+inputText.name = `search`
+inputText.placeholder="search"
+let inputSubmit = createElement(`input`)
+inputSubmit.setAttribute(`type`, `submit`)
+inputSubmit.value = "Search"
+
+
+
+
+searchForm.append(inputText, inputSubmit)
+// let searchA = createElement(`a`,`ds`)
+// searchA.setAttribute(`href`, `./search.html?name_=${inputText.textContent}`)
+
+
 for (let i = 0; i < navBarobj.texts.length; i++) {
     let navBarli = createElement(`li`)
     navBarli.setAttribute(`class`, "nav-item")
@@ -17,8 +34,10 @@ for (let i = 0; i < navBarobj.texts.length; i++) {
     navBarUl.append(navBarli)
 }
 nav.append(navBarUl)
-header.append(nav)
+header.append(searchForm, nav)
 document.body.prepend(header)
+
+searchForm.action = './search.html';
 
 function createElement(element, text) {
     let variable = document.createElement(element)

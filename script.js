@@ -85,11 +85,11 @@ console.log(post)
                                         albumAccordionButton.textContent = album.title.toUpperCase()
                                         let albumAccordionCollapse = createdAccordionCollapse(`album_${album.id}`, `album_${post.id}`,`album_${album.id}`)
                                         let albumAccordionBody = createdAccordionBody()
-                                        
+                                        console.log(album)
                                         // let albumsP = createElement(`p`, `${index + 1}. `)
                                         let br = createElement(`br`)
                                         let albumsA = createElement(`a`, `${album.title.toUpperCase()}.`)
-                                        albumsA.setAttribute(`href`, `./album.html?user_id=${post.user.id}&user_name=${post.user.name}`)
+                                        albumsA.setAttribute(`href`, `./album.html?album_id=${album.id}`)
             
                                         let albumsImg = createElement(`img`)
                                         albumsImg.setAttribute(`src`, album.photos[0].thumbnailUrl)
