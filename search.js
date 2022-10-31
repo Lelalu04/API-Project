@@ -11,57 +11,28 @@ containerAccordion.setAttribute(`id`, `accordion-search`)
 
 container.append(containerAccordion)
 
-// fetch(`https://jsonplaceholder.typicode.com/users?q=${searchText}`)
-// .then(res => res.json())
-// .then(users => {
-//     let usersAcardionItem = createdivAccordionItem()
-//     let usersAccordionH2 = createdivAccordionHeader(`h2`, `users`)
-//     let usersAccordionButton = createdAccordionButton(`user`)
-//     usersAccordionButton.textContent = `Users: (${[...users].length})`
-//     let usersAccordionCollapse = createdAccordionCollapse(`user`, `search`, `users`)
-//     let usersAccordionBody = createdAccordionBody()
-//     // console.log([...users].length)
-//     users.map(user => {
-        
-//     let ul = createElement(`ul`)
-//     let li = createElement(`li`)
-
-//     let nameA = createElement('a', `${user.name}`)
-//     nameA.setAttribute(`href`, `./user.html?user_id=${user.id}`)
-//     // nameA.setAttribute(`id`, `1`)
-
-//     li.append(nameA)
-//     ul.append(li)
-//     usersAccordionBody.append(ul)
-// })
-//     usersAccordionCollapse.append(usersAccordionBody)
-//     usersAccordionH2.append(usersAccordionButton)
-//     usersAcardionItem.append(usersAccordionH2,usersAccordionCollapse)
-//     containerAccordion.append(usersAcardionItem)
+loadToDisplay()
 
 
-// console.log(users)
-// })
-searchFunc(`users`, `user`, `Users`, `name`)
-searchFunc(`posts`, `post`, `Posts`, `title`)
-searchFunc(`albums`, `album`, `Albums`, `title`)
+async function loadToDisplay() {
+    await searchFunc(`users`, `user`, `Users`, `name`)
+    await searchFunc(`posts`, `post`, `Posts`, `title`)
+    await searchFunc(`albums`, `album`, `Albums`, `title`)
+}
 
+async function searchFunc(category, buttonId, textContentBtn,findObj) {
 
+    let datas = await asyncAwaitFetchData(category)
+    // if(datas){
 
-
-function searchFunc(category, buttonId, textContentBtn,findObj) {
-    fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`)
-.then(res => res.json())
-.then(datas => {
-    console.log(datas)
-    let usersAcardionItem = createdivAccordionItem()
-    let usersAccordionH2 = createdivAccordionHeader(`h2`, category)
-    let usersAccordionButton = createdAccordionButton(buttonId)
-    usersAccordionButton.textContent = textContentBtn +`: (${[...datas].length})`
-    let usersAccordionCollapse = createdAccordionCollapse(buttonId, `search`, category)
-    let usersAccordionBody = createdAccordionBody()
+    // }
+    let accordionItem = createdivAccordionItem()
+    let accordionH2 = createdivAccordionHeader(`h2`, category)
+    let accordionButton = createdAccordionButton(buttonId)
+    accordionButton.textContent = textContentBtn +`: (${[...datas].length})`
+    let accordionCollapse = createdAccordionCollapse(buttonId, `search`, category)
+    let accordionBody = createdAccordionBody()
     datas.map(data => {
-        console.log(data) 
     let ul = createElement(`ul`)
     let li = createElement(`li`)
 
@@ -70,14 +41,20 @@ function searchFunc(category, buttonId, textContentBtn,findObj) {
 
     li.append(nameA)
     ul.append(li)
-    usersAccordionBody.append(ul)
+    accordionBody.append(ul)
 })
-    usersAccordionCollapse.append(usersAccordionBody)
-    usersAccordionH2.append(usersAccordionButton)
-    usersAcardionItem.append(usersAccordionH2,usersAccordionCollapse)
-    containerAccordion.append(usersAcardionItem)
+    accordionCollapse.append(accordionBody)
+    accordionH2.append(accordionButton)
+    accordionItem.append(accordionH2,accordionCollapse)
+    containerAccordion.append(accordionItem)
 
-})
+
+}
+async function asyncAwaitFetchData(category){
+    const res = await fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`);
+  const datas = await res.json();
+  return datas
+
 }
 
 
