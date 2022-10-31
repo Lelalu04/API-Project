@@ -1,10 +1,7 @@
-import { createElement, createdivAccordionItem, createdivAccordionHeader, createdAccordionButton, createdAccordionCollapse, createdAccordionBody } from "./function.js";
-
+import { createElement,createContainerAccordion, accordionBase } from "./function.js";
 
 let container = document.querySelector(`.container-home`)
-let containerAccordion = document.createElement(`div`)
-containerAccordion.setAttribute(`class`, `accordion`)
-containerAccordion.setAttribute(`id`, `accordion-post`)
+let containerAccordion = createContainerAccordion(`post`)
 
 container.append(containerAccordion)
 
@@ -28,9 +25,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
             nameP.append(nameSpan)
             postAccordionBody_button[0].append(linkToFullPost, postBodyP, nameP)
 
-            let albums_CommentsAccordion = createElement(`div`)
-            albums_CommentsAccordion.setAttribute(`class`, `accordion`)
-            albums_CommentsAccordion.setAttribute(`id`, `accordion-comments-albums_${post.id}`)
+            let albums_CommentsAccordion = createContainerAccordion(`comments-albums_${post.id}`)
 
             let albumsAccordionBody_button = accordionBase(albums_CommentsAccordion, `h3`, `albums_${post.id}`, `comments-albums_${post.id}`, `albums_${post.id}`, `Albums`)
             let commentsAccordionBody_button = accordionBase(albums_CommentsAccordion, `h3`, `comments_${post.id}`, `comments-albums_${post.id}`, `comments_${post.id}`, `Comments`)
@@ -43,9 +38,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
                     fetch(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
                         .then(res => res.json())
                         .then(albums => {
-                            albumsAccordion = createElement(`div`)
-                            albumsAccordion.setAttribute(`class`, `accordion`)
-                            albumsAccordion.setAttribute(`id`, `accordion-album_${post.id}`)
+                            albumsAccordion = createContainerAccordion(`album_${post.id}`)
                             albums.map((album) => {
 
                                 let albumAccordionBody_button = accordionBase(albumsAccordion, `h3`, `album_${album.id}`, `album_${post.id}`, `album_${album.id}`, album.title.toUpperCase())
@@ -71,9 +64,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
                     fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
                         .then(res => res.json())
                         .then(comments => {
-                            commentsAccordion = createElement(`div`)
-                            commentsAccordion.setAttribute(`class`, `accordion`)
-                            commentsAccordion.setAttribute(`id`, `accordion-comment_${post.id}`)
+                            commentsAccordion = createContainerAccordion(`comment_${post.id}`)
                             comments.map(comment => {
 
                                 let commentAccordionBody_button = accordionBase(commentsAccordion, `h3`, `comment_${comment.id}`, `comment_${post.id}`, `comment_${comment.id}`, comment.name)
@@ -82,7 +73,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
                                 let commentEmailP = createElement(`p`, `Email: `)
                                 let commentEmailSpan = createElement(`span`)
                                 let commentEmailA = createElement(`a`, comment.email)
-                                commentEmailA.setAttribute(`href`, `href`, `mailto:${comment.email}`)
+                                commentEmailA.setAttribute(`href`, `mailto:${comment.email}`)
 
                                 commentEmailP.append(commentEmailSpan)
                                 commentEmailSpan.append(commentEmailA)
@@ -94,20 +85,3 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
             })
         })
     })
-function accordionBase(container, headerH, headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby, textContent) {
-    let postAccordionItem = createdivAccordionItem()
-    let postAccordionH2 = createdivAccordionHeader(headerH, headerIdButtonIdCallapse)
-    let postAccordionButton = createdAccordionButton(headerIdButtonIdCallapse)
-    postAccordionButton.textContent = textContent
-    let postAccordionCollapse = createdAccordionCollapse(headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby)
-    let postAccordionBody = createdAccordionBody()
-
-    postAccordionCollapse.append(postAccordionBody)
-    postAccordionH2.append(postAccordionButton)
-    postAccordionItem.append(postAccordionH2, postAccordionCollapse)
-    container.append(postAccordionItem)
-
-    let accordionBody_Button = [postAccordionBody, postAccordionButton]
-    return accordionBody_Button
-
-}

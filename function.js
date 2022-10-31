@@ -3,6 +3,12 @@ export function createElement(element, text) {
     variable.textContent = text
     return variable
 }
+export function createContainerAccordion(id) {
+    let containerAccordion = document.createElement(`div`)
+    containerAccordion.setAttribute(`class`, `accordion`)
+    containerAccordion.setAttribute(`id`, `accordion-${id}`)
+    return containerAccordion
+}
 export function createdivAccordionItem() {
     let accordionItem = document.createElement(`div`)
     accordionItem.setAttribute(`class`, `accordion-item`)
@@ -37,4 +43,21 @@ export function createdAccordionBody() {
     let accordionBody = document.createElement(`div`)
     accordionBody.setAttribute(`class`, "accordion-body")
     return accordionBody
+}
+export function accordionBase(container, headerH, headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby, textContent) {
+    let postAccordionItem = createdivAccordionItem()
+    let postAccordionH2 = createdivAccordionHeader(headerH, headerIdButtonIdCallapse)
+    let postAccordionButton = createdAccordionButton(headerIdButtonIdCallapse)
+    postAccordionButton.textContent = textContent
+    let postAccordionCollapse = createdAccordionCollapse(headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby)
+    let postAccordionBody = createdAccordionBody()
+
+    postAccordionCollapse.append(postAccordionBody)
+    postAccordionH2.append(postAccordionButton)
+    postAccordionItem.append(postAccordionH2, postAccordionCollapse)
+    container.append(postAccordionItem)
+
+    let accordionBody_Button = [postAccordionBody, postAccordionButton]
+    return accordionBody_Button
+
 }
