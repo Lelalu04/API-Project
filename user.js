@@ -1,51 +1,63 @@
-import { asyncAwaitFetchData,createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { asyncAwaitFetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 
-let container = document.querySelector(`.container-user`)
+init()
+function init() {
+    renderUserInfo()
+    
+}
 
-        let user = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)
-        let idP = createElement(`p`, `ID: ${user.id}`)
-        let nameP = createElement(`p`, `Name: ${user.name}`)
-        let usernameP = createElement(`p`, `User Name: ${user.username}`)
-        let emailP = createPSpanA(`Email: `, `${user.email}`, `mailto:${user.email}`)
-        let addressP = createPSpanA(`Address: `, `${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}.`, `https://maps.google.com/?q=${user.address.geo.lat},${user.address.geo.lng}`)
-        let phoneP = createPSpanA(`Phone: `, `${user.phone}`, `tel:${user.phone}`)
-        let websiteP = createPSpanA(`Website: `, `${user.website}`, `${user.website}`)
-        let companyP = createElement(`p`, `Company:`)
-        let ul = createElement(`ul`)
-        ul.setAttribute(`class`, `list-group`)
+async function renderUserInfo () {
+    
+    let container = document.querySelector(`.container-user`)
+    
+    let user = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)
+    let idP = createElement(`p`, `ID: ${user.id}`)
+    let nameP = createElement(`p`, `Name: ${user.name}`)
+    let usernameP = createElement(`p`, `User Name: ${user.username}`)
+    let emailP = createPSpanA(`Email: `, `${user.email}`, `mailto:${user.email}`)
+    let addressP = createPSpanA(`Address: `, `${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}.`, `https://maps.google.com/?q=${user.address.geo.lat},${user.address.geo.lng}`)
+    let phoneP = createPSpanA(`Phone: `, `${user.phone}`, `tel:${user.phone}`)
+    let websiteP = createPSpanA(`Website: `, `${user.website}`, `${user.website}`)
+    let companyP = createElement(`p`, `Company:`)
+    let ul = createElement(`ul`)
+    ul.setAttribute(`class`, `list-group`)
+    
+    createElementLi(ul, `Name: ${user.company.name}`)
+    createElementLi(ul, `Catch phrase: ${user.company.catchPhrase}`)
+    createElementLi(ul, `BS: ${user.company.bs}`)
+    
+    let accordionContainer = createContainerAccordion(`user`)
+    container.append(idP, nameP, usernameP, emailP, addressP, phoneP, websiteP, companyP, ul, accordionContainer) 
+    renderAlbumAccordion(accordionContainer,user)
+    renderPostAccordion(accordionContainer,user)
+    
 
-        createElementLi(ul, `Name: ${user.company.name}`)
-        createElementLi(ul, `Catch phrase: ${user.company.catchPhrase}`)
-        createElementLi(ul, `BS: ${user.company.bs}`)
+}    
 
-        let accordionContainer = createContainerAccordion(`user`)
-        let albumsBody = accordionBase(accordionContainer, `albums`, `albums`, `user`, `albums`, `Albums`)
-        let postsBody = accordionBase(accordionContainer, `posts`, `posts`, `user`, `posts`, `Posts`)
+function renderAlbumAccordion(accordion,user){
+let albumsBody = accordionBase(accordion, `albums`, `albums`, `user`, `albums`, `Albums`)
 
-        let postsUl = createElement(`ul`)
-        postsUl.setAttribute(`class`, `list-group`)
+    let albumsUl = createElement(`ul`)
+    albumsUl.setAttribute(`class`, `list-group`)
+    albumsBody[0].append(albumsUl)
+    
+    user.albums.map(album => {
+        createElementAInnerLi(`${album.title.toUpperCase()}`, `./album.html?album_id=${album.id}`, albumsUl)
+    })
+}
 
-        user.posts.map(post => {
+function renderPostAccordion(accordion,user) {
+    let postsBody = accordionBase(accordion, `posts`, `posts`, `user`, `posts`, `Posts`)
 
-            let albumAutorA = createElement('a', `${post.title.toUpperCase()}`)
-            albumAutorA.setAttribute(`href`, `./post.html?post_id=${post.id}`)
-            let li = createElementLi(postsUl)
-            li.append(albumAutorA)
-        })
-        postsBody[0].append(postsUl)
+    let postsUl = createElement(`ul`)
+    postsUl.setAttribute(`class`, `list-group`)
 
-        let albumsUl = createElement(`ul`)
-        albumsUl.setAttribute(`class`, `list-group`)
-        user.albums.map(album => {
-
-            let albumA = createElement('a', `${album.title.toUpperCase()}`)
-            albumA.setAttribute(`href`, `./album.html?album_id=${album.id}`)
-            let li = createElementLi(albumsUl)
-            li.append(albumA)
-        })
-        albumsBody[0].append(albumsUl)
-        container.append(idP, nameP, usernameP, emailP, addressP, phoneP, websiteP, companyP, ul, accordionContainer)
+    user.posts.map(post => {
+        createElementAInnerLi(`${post.title.toUpperCase()}`, `./post.html?post_id=${post.id}`, postsUl)
+    })
+    postsBody[0].append(postsUl)
+}
 
 function createElementLi(ul, textContent) {
     let li = document.createElement(`li`)
@@ -53,4 +65,11 @@ function createElementLi(ul, textContent) {
     li.textContent = textContent
     ul.append(li)
     return li
+}
+
+function createElementAInnerLi(title, link, ul) {
+    let a = createElement('a', title)
+    a.setAttribute(`href`, link)
+    let li = createElementLi(ul)
+    li.append(a)
 }

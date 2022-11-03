@@ -81,5 +81,7 @@ export function accordionBase(container, headerH, headerIdButtonIdCallapse, acco
 
     let accordionBody_Button = [postAccordionBody, postAccordionButton]
     return accordionBody_Button
-
+}
+export function firstLetterUpperCase(text) {
+    return text[0].toUpperCase() + text.slice(1)
 }
