@@ -1,4 +1,4 @@
-import { createElement,createContainerAccordion, accordionBase } from "./function.js";
+import { createElement,createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 
 let container = document.querySelector(`.container-home`)
 let containerAccordion = createContainerAccordion(`post`)
@@ -16,13 +16,8 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
             linkToFullPost.setAttribute(`href`, `./post.html?post_id=${post.id}`)
 
             let postBodyP = createElement(`p`, post.body)
-            let nameP = createElement(`p`, `Name: `)
-            let nameSpan = createElement('span')
-            let nameA = createElement('a', `${post.user.name}`)
-            nameA.setAttribute(`href`, `./user.html?user_id=${post.user.id}`)
+            let nameP = createPSpanA(`Name: `, `${post.user.name}`, `./user.html?user_id=${post.user.id}`)
 
-            nameSpan.append(nameA)
-            nameP.append(nameSpan)
             postAccordionBody_button[0].append(linkToFullPost, postBodyP, nameP)
 
             let albums_CommentsAccordion = createContainerAccordion(`comments-albums_${post.id}`)
@@ -70,13 +65,8 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
                                 let commentAccordionBody_button = accordionBase(commentsAccordion, `h3`, `comment_${comment.id}`, `comment_${post.id}`, `comment_${comment.id}`, comment.name)
 
                                 let commentBodyP = createElement(`p`, comment.name)
-                                let commentEmailP = createElement(`p`, `Email: `)
-                                let commentEmailSpan = createElement(`span`)
-                                let commentEmailA = createElement(`a`, comment.email)
-                                commentEmailA.setAttribute(`href`, `mailto:${comment.email}`)
+                                let commentEmailP = createPSpanA(`Email: `, comment.email, `mailto:${comment.email}`)
 
-                                commentEmailP.append(commentEmailSpan)
-                                commentEmailSpan.append(commentEmailA)
                                 commentAccordionBody_button[0].append(commentBodyP, commentEmailP)
                                 commentsAccordionBody_button[0].append(commentsAccordion)
                             })
@@ -85,3 +75,4 @@ fetch(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
             })
         })
     })
+

@@ -3,6 +3,16 @@ export function createElement(element, text) {
     variable.textContent = text
     return variable
 }
+export function createPSpanA(pTextContent, aTextContent, aHref) {
+    let p = createElement(`p`, pTextContent)
+    let span = createElement(`span`)
+    let a = createElement(`a`, aTextContent)
+    a.setAttribute(`href`, aHref)
+
+    p.append(span)
+    span.append(a)
+    return p
+}
 export function createContainerAccordion(id) {
     let containerAccordion = document.createElement(`div`)
     containerAccordion.setAttribute(`class`, `accordion`)

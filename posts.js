@@ -8,12 +8,13 @@ fetch(`https://jsonplaceholder.typicode.com/posts`)
         let ul = createElement(`ul`)
         ul.setAttribute(`class`, "list-group")
         posts.map(post => {
-            console.log(post)
+        
         let li = createElement(`li`)
         li.setAttribute(`class`, `list-group-item`)
+
         let albumAutorA = createElement('a', `${post.title}`)
         albumAutorA.setAttribute(`href`, `./post.html?post_id=${post.id}`)
-        // li.textContent = `${user.name} (Posts: ${[...user.posts].length})`
+        
         li.append(albumAutorA)
         ul.append(li)
         })

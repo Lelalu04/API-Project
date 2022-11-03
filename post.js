@@ -1,4 +1,4 @@
-import { createElement,createContainerAccordion, accordionBase } from "./function.js";
+import { createElement,createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 let container = document.querySelector(`.container-post`)
 
 let queryParams = document.location.search;
@@ -10,18 +10,10 @@ fetch(`https://jsonplaceholder.typicode.com/posts/`+postId+`/?_embed=comments&_e
 .then(post => {
     
             let postTitle = createElement(`h2`, post.title.toUpperCase())
-
             let postBodyP = createElement(`p`, post.body)
-            let nameP = createElement(`p`, `Name: `)
-            let nameSpan = createElement('span')
-            let nameA = createElement('a', `${post.user.name}`)
-            nameA.setAttribute(`href`, `./user.html?user_id=${post.user.id}`)
-            // nameA.setAttribute(`id`, `1`)
-
-            nameSpan.append(nameA)
-            nameP.append(nameSpan)
+            let nameP = createPSpanA(`Name: `,`${post.user.name}`,`./user.html?user_id=${post.user.id}`)
+         
             container.append(postTitle,postBodyP,nameP)
-
 
 
             let albums_CommentsAccordion = createContainerAccordion(`comments-albums_${post.id}`)
@@ -72,14 +64,8 @@ fetch(`https://jsonplaceholder.typicode.com/posts/`+postId+`/?_embed=comments&_e
                             let commentAccordionBody = accordionBase(commentsAccordion, `h3`, `comment_${comment.id}`, `comment_${post.id}`,`comment_${comment.id}`,comment.name)
     
                             let commentBodyP = createElement(`p`, comment.name)
-                            let commentEmailP = createElement(`p`, `Email: `)
-                            let commentEmailSpan = createElement(`span`)
-                            let commentEmailA = createElement(`a`, comment.email)
-                            commentEmailA.setAttribute(`href`, `href`, `mailto:${comment.email}`)
-    
-                            commentEmailP.append(commentEmailSpan)
-                            commentEmailSpan.append(commentEmailA)
-    
+                            let commentEmailP = createPSpanA(`Email: `,comment.email,`mailto:${comment.email}`)
+
                             commentAccordionBody[0].append(commentBodyP,commentEmailP)
                             commentsAccordionBody[0].append(commentsAccordion)
                         })
