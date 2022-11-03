@@ -1,4 +1,4 @@
-import { createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
+import { asyncAwaitFetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
 
 let form = document.getElementById(`search-form`)
 let container = document.querySelector(`.container-search`)
@@ -15,6 +15,7 @@ form.addEventListener(`submit`, (e) => {
     })
     console.log(searchInput.value)
     loadToDisplay(searchInput.value)
+    e.target.reset()
 })
 console.log(`veikia`)
 
@@ -30,10 +31,7 @@ async function loadToDisplay(searchText) {
 
 async function searchFunc(category, buttonId, textContentBtn, findObj,searchText) {
 
-    let datas = await asyncAwaitFetchData(category,searchText)
-    // if(datas){
-
-    // }
+    let datas = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`)
     let accordionBody = accordionBase(containerAccordion, `h2`, category, `search`, category, textContentBtn + `: (${[...datas].length})`)
     datas.map(data => {
         let ul = createElement(`ul`)
@@ -48,9 +46,8 @@ async function searchFunc(category, buttonId, textContentBtn, findObj,searchText
     })
 
 }
-async function asyncAwaitFetchData(category,searchText) {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`);
-    const datas = await res.json();
-    return datas
-
-}
+// async function asyncAwaitFetchData(category,searchText) {
+//     const res = await fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`);
+//     const datas = await res.json();
+//     return datas
+// }

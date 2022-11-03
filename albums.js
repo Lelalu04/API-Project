@@ -1,10 +1,8 @@
-import { createElement,createPSpanA,createContainerAccordion, accordionBase } from "./function.js";
+import { asyncAwaitFetchData,createElement,createPSpanA,createContainerAccordion, accordionBase } from "./function.js";
 
 let container = document.querySelector(`.container-albums`)
 
-fetch(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`)
-.then(res => res.json())
-.then(albums => {
+    let albums = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`)
         let h2 = createElement(`h2`, `Albums List: `)
         let h2Span = createElement(`span`,`(${[...albums].length})`)
         h2.append(h2Span)
@@ -28,4 +26,3 @@ fetch(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`)
 
         })      
         container.append(albumsAccordion)
-    })

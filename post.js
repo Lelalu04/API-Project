@@ -1,10 +1,8 @@
-import { createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { asyncAwaitFetchData,createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 let container = document.querySelector(`.container-post`)
 
-fetch(`https://jsonplaceholder.typicode.com/posts/`+ getUrlParams(`post_id`) +`/?_embed=comments&_expand=user`)
-.then(res => res.json())
-.then(post => {
-    
+
+            let post = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts/`+ getUrlParams(`post_id`) +`/?_embed=comments&_expand=user`)
             let postTitle = createElement(`h2`, post.title.toUpperCase())
             let postBodyP = createElement(`p`, post.body)
             let nameP = createPSpanA(`Name: `,`${post.user.name}`,`./user.html?user_id=${post.user.id}`)
@@ -19,16 +17,14 @@ fetch(`https://jsonplaceholder.typicode.com/posts/`+ getUrlParams(`post_id`) +`/
 
             container.append(albums_CommentsAccordion)
             let albumsAccordion;
-            albumsAccordionBody[1].addEventListener(`click`, () => {
+            albumsAccordionBody[1].addEventListener(`click`, async () => {
                 if(!albumsAccordion){
-                    fetch(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
-                                .then(res => res.json())
-                                .then(albums => {
+                                    let albums = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
                                     albumsAccordion = createContainerAccordion(`div`, `album_${post.id}`)
                 
                                     albums.map((album) => {
     
-                                        let albumAccordionBody = accordionBase(albumsAccordion, `h3`, `album_${post.id}`, `album_${post.id}`,`album_${post.id}`,album.title.toUpperCase())
+                                        let albumAccordionBody = accordionBase(albumsAccordion, `h3`, `album_${album.id}`, `album_${post.id}`,`album_${album.id}`,album.title.toUpperCase())
                                         
                                         let br = createElement(`br`)
                                         let albumsA = createElement(`a`, `${album.title.toUpperCase()}.`)
@@ -37,23 +33,17 @@ fetch(`https://jsonplaceholder.typicode.com/posts/`+ getUrlParams(`post_id`) +`/
                                         let albumsImg = createElement(`img`)
                                         albumsImg.setAttribute(`src`, album.photos[0].thumbnailUrl)
                                         albumsImg.setAttribute(`alt`, album.photos[0].title)
-                                        
-                                    // albumsSpan.append(albumsA)
-                                    // albumsP.append(albumsSpan)
     
                                     albumAccordionBody[0].append(albumsA,br,albumsImg)
                                     albumsAccordionBody[0].append(albumsAccordion)
                                     })
-                                })
                 }
             })
 
             let commentsAccordion;
-            commentsAccordionBody[1].addEventListener(`click`, () => {
+            commentsAccordionBody[1].addEventListener(`click`, async () => {
                 if(!commentsAccordion){
-                    fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
-                    .then(res => res.json())
-                    .then(comments => {
+                        let comments = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
                         commentsAccordion = createContainerAccordion(`comment_${post.id}`)
                         comments.map(comment => {
 
@@ -65,7 +55,6 @@ fetch(`https://jsonplaceholder.typicode.com/posts/`+ getUrlParams(`post_id`) +`/
                             commentAccordionBody[0].append(commentBodyP,commentEmailP)
                             commentsAccordionBody[0].append(commentsAccordion)
                         })
-                    })
                 }
             })
-        })
+

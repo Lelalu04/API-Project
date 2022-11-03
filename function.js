@@ -1,3 +1,8 @@
+export async function asyncAwaitFetchData(link) {
+    const res = await fetch(link);
+    const datas = await res.json();
+    return datas
+}
 export function getUrlParams(getParm) {
     let queryParams = document.location.search;
 let urlParams = new URLSearchParams(queryParams)

@@ -1,11 +1,7 @@
-import { createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { asyncAwaitFetchData,createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 let container = document.querySelector(`.container-user`)
 
-fetch(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)
-    .then(res => res.json())
-    .then(user => {
-        console.log(user)
-
+        let user = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)
         let idP = createElement(`p`, `ID: ${user.id}`)
         let nameP = createElement(`p`, `Name: ${user.name}`)
         let usernameP = createElement(`p`, `User Name: ${user.username}`)
@@ -48,7 +44,7 @@ fetch(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + 
         })
         albumsBody[0].append(albumsUl)
         container.append(idP, nameP, usernameP, emailP, addressP, phoneP, websiteP, companyP, ul, accordionContainer)
-    })
+
 function createElementLi(ul, textContent) {
     let li = document.createElement(`li`)
     li.setAttribute(`class`, `list-group-item`)

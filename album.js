@@ -1,16 +1,14 @@
-import { createElement, getUrlParams, createPSpanA } from "./function.js";
+import { asyncAwaitFetchData,createElement, getUrlParams, createPSpanA } from "./function.js";
 
 let container = document.querySelector(`.container-album`)
 
-fetch(`https://jsonplaceholder.typicode.com/albums/` + getUrlParams(`album_id`) + `/?_embed=photos&_expand=user`)
-    .then(res => res.json())
-    .then(album => {
-        
+        let album = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/albums/` + getUrlParams(`album_id`) + `/?_embed=photos&_expand=user`)
+    
         let albumTitleH2 = createElement(`h2`, album.title.toUpperCase())
         let albumAutorP = createPSpanA(`Autor: `,album.user.name,`./user.html?user_id=${album.userId}`)
 
         let albumPhotoDiv = createElement(`div`)
-        
+        console.log(album)
         album.photos.map(photos => {
             
             let albumsImg = createElement(`img`)
@@ -19,4 +17,3 @@ fetch(`https://jsonplaceholder.typicode.com/albums/` + getUrlParams(`album_id`) 
             albumPhotoDiv.append(albumsImg)
         })
         container.append(albumTitleH2, albumAutorP,albumPhotoDiv)
-    })

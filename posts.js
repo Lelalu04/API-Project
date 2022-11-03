@@ -1,9 +1,8 @@
+import { asyncAwaitFetchData,createElement } from "./function.js";
+
 let container = document.querySelector(`.container-posts`)
 
-fetch(`https://jsonplaceholder.typicode.com/posts`)
-    .then(res => res.json())
-    .then(posts => {
-        console.log(posts)
+        let posts = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts`)
         let ListH2 = createElement(`h2`, `Posts List:`)
         let ul = createElement(`ul`)
         ul.setAttribute(`class`, "list-group")
@@ -14,15 +13,9 @@ fetch(`https://jsonplaceholder.typicode.com/posts`)
 
         let albumAutorA = createElement('a', `${post.title}`)
         albumAutorA.setAttribute(`href`, `./post.html?post_id=${post.id}`)
-        
+
         li.append(albumAutorA)
         ul.append(li)
         })
         container.append(ListH2,ul)
-    })
 
-    function createElement(element, text) {
-        let variable = document.createElement(element)
-        variable.textContent = text
-        return variable
-    }
