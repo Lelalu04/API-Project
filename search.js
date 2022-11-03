@@ -1,27 +1,29 @@
 import { asyncAwaitFetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
+import header from "./header.js";
+init()
 
-let form = document.getElementById(`search-form`)
-let container = document.querySelector(`.container-search`)
-let containerAccordion = createContainerAccordion(`search`)
-let searchInput = document.getElementById(`search-input`)
+function init() {
+    outerSearchForm()
+    innerSearchForm() 
+}
+function outerSearchForm() {
+    loadToDisplay(getUrlParams(`search`))
+}
 
-container.append(containerAccordion)
-
-form.addEventListener(`submit`, (e) => {
-    e.preventDefault()
-    let items = document.querySelectorAll(`.accordion-item`)
-    items.forEach(item => {
-        item.remove()
+function innerSearchForm() {
+    let form = document.getElementById(`search-form`)
+    let searchInput = document.getElementById(`search-input`)
+    form.addEventListener(`submit`, (e) => {
+        e.preventDefault()
+        let items = document.querySelectorAll(`.accordion-item`)
+        items.forEach(item => {
+            item.remove()
+        })
+        loadToDisplay(searchInput.value)
+        e.target.reset()
     })
-    console.log(searchInput.value)
-    loadToDisplay(searchInput.value)
-    e.target.reset()
-})
-console.log(`veikia`)
-
-
-loadToDisplay(getUrlParams(`search`))
-
+    
+}
 
 async function loadToDisplay(searchText) {
     await searchFunc(`users`, `user`, `Users`, `name`,searchText)
@@ -30,6 +32,8 @@ async function loadToDisplay(searchText) {
 }
 
 async function searchFunc(category, buttonId, textContentBtn, findObj,searchText) {
+    let container = document.querySelector(`.container-search`)
+    let containerAccordion = createContainerAccordion(`search`)
 
     let datas = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`)
     let accordionBody = accordionBase(containerAccordion, `h2`, category, `search`, category, textContentBtn + `: (${[...datas].length})`)
@@ -44,10 +48,6 @@ async function searchFunc(category, buttonId, textContentBtn, findObj,searchText
         ul.append(li)
         accordionBody[0].append(ul)
     })
+    container.append(containerAccordion)
 
 }
-// async function asyncAwaitFetchData(category,searchText) {
-//     const res = await fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`);
-//     const datas = await res.json();
-//     return datas
-// }

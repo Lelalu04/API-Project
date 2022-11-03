@@ -1,5 +1,5 @@
-import { createElement,createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
-
+import { createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import header from "./header.js";
 let container = document.querySelector(`.container-home`)
 let containerAccordion = createContainerAccordion(`post`)
 

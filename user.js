@@ -1,4 +1,6 @@
 import { asyncAwaitFetchData,createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import header from "./header.js";
+
 let container = document.querySelector(`.container-user`)
 
         let user = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)

@@ -1,4 +1,5 @@
 import { asyncAwaitFetchData,createElement } from "./function.js";
+import header from "./header.js";
 
 let container = document.querySelector(`.container-posts`)
 

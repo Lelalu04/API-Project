@@ -1,6 +1,13 @@
 import { asyncAwaitFetchData,createElement,createPSpanA,createContainerAccordion, accordionBase } from "./function.js";
+import header from "./header.js";
+init()
 
-let container = document.querySelector(`.container-albums`)
+function init() {
+    renderAlbumsList()
+}
+async function renderAlbumsList() {
+
+    let container = document.querySelector(`.container-albums`)
 
     let albums = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`)
         let h2 = createElement(`h2`, `Albums List: `)
@@ -23,6 +30,6 @@ let container = document.querySelector(`.container-albums`)
             albumsImg.setAttribute(`alt`, [...album.photos][albumPhotoRandom].title)
             
             albumAccordionBody[0].append(albumfullInfoA, albumAutorP, albumsImg)
-
         })      
         container.append(albumsAccordion)
+}
