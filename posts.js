@@ -12,10 +12,10 @@ let container = document.querySelector(`.container-posts`)
         let li = createElement(`li`)
         li.setAttribute(`class`, `list-group-item`)
 
-        let albumAutorA = createElement('a', `${post.title}`)
-        albumAutorA.setAttribute(`href`, `./post.html?post_id=${post.id}`)
+        let postA = createElement('a', `${post.title.toUpperCase()}`)
+        postA.setAttribute(`href`, `./post.html?post_id=${post.id}`)
 
-        li.append(albumAutorA)
+        li.append(postA)
         ul.append(li)
         })
         container.append(ListH2,ul)

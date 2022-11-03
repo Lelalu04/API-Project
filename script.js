@@ -1,4 +1,4 @@
-import { asyncAwaitFetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { firstLetterUpperCase,asyncAwaitFetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 
 init()
@@ -19,7 +19,7 @@ async function LoadToDisplay() {
         let linkToFullPost = createElement(`a`, `See Full Post`)
         linkToFullPost.setAttribute(`href`, `./post.html?post_id=${post.id}`)
     
-        let postBodyP = createElement(`p`, post.body)
+        let postBodyP = createElement(`p`, firstLetterUpperCase(post.body))
         let nameP = createPSpanA(`Name: `, `${post.user.name}`, `./user.html?user_id=${post.user.id}`)
     
         let albums_CommentsAccordion = createContainerAccordion(`comments-albums_${post.id}`)

@@ -1,4 +1,4 @@
-import { asyncAwaitFetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { firstLetterUpperCase,asyncAwaitFetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 
 init()
@@ -12,7 +12,7 @@ async function getPostInfo() {
     
     let post = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts/` + getUrlParams(`post_id`) + `/?_embed=comments&_expand=user`)
     let postTitle = createElement(`h2`, post.title.toUpperCase())
-    let postBodyP = createElement(`p`, post.body)
+    let postBodyP = createElement(`p`, firstLetterUpperCase(post.body))
     let nameP = createPSpanA(`Name: `, `${post.user.name}`, `./user.html?user_id=${post.user.id}`)
     
     let albums_CommentsAccordion = createContainerAccordion(`comments-albums_${post.id}`)
@@ -32,7 +32,7 @@ function createAlbumsAccordion(accordion,post){
     
             albums.map((album) => {
     
-                let albumAccordionBody = accordionBase(accordion, `h3`, `album_${album.id}`, `album_${post.id}`, `album_${album.id}`, album.title.toUpperCase())
+                let albumAccordionBody = accordionBase(albumsAccordion, `h3`, `album_${album.id}`, `album_${post.id}`, `album_${album.id}`, album.title.toUpperCase())
     
                 let br = createElement(`br`)
                 let albumsA = createElement(`a`, `${album.title.toUpperCase()}.`)
@@ -58,9 +58,9 @@ let commentsAccordionBody_btn = accordionBase(accordion, `h3`, `comments_${post.
         commentsAccordion = createContainerAccordion(`comment_${post.id}`)
         comments.map(comment => {
 
-            let commentAccordionBody = accordionBase(accordion, `h3`, `comment_${comment.id}`, `comment_${post.id}`, `comment_${comment.id}`, comment.name)
+            let commentAccordionBody = accordionBase(commentsAccordion, `h3`, `comment_${comment.id}`, `comment_${post.id}`, `comment_${comment.id}`, comment.name.toUpperCase())
 
-            let commentBodyP = createElement(`p`, comment.name)
+            let commentBodyP = createElement(`p`, firstLetterUpperCase(comment.body))
             let commentEmailP = createPSpanA(`Email: `, comment.email, `mailto:${comment.email}`)
 
             commentAccordionBody[0].append(commentBodyP, commentEmailP)

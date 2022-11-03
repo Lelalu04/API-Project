@@ -1,4 +1,4 @@
-import { asyncAwaitFetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
+import { firstLetterUpperCase,asyncAwaitFetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 init()
 
@@ -41,7 +41,7 @@ async function searchFunc(category, buttonId, textContentBtn, findObj,searchText
         let ul = createElement(`ul`)
         let li = createElement(`li`)
 
-        let nameA = createElement('a', `${data[findObj]}`)
+        let nameA = createElement('a', `${firstLetterUpperCase(data[findObj])}`)
         nameA.setAttribute(`href`, `./${buttonId}.html?${buttonId}_id=${data.id}`)
 
         li.append(nameA)
