@@ -1,10 +1,4 @@
-import { createElement, createContainerAccordion, accordionBase } from "./function.js";
-
-let queryParams = document.location.search;
-let urlParams = new URLSearchParams(queryParams)
-let searchText = urlParams.get(`search`)
-
-console.log(searchText)
+import { createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
 
 let form = document.getElementById(`search-form`)
 let container = document.querySelector(`.container-search`)
@@ -25,7 +19,7 @@ form.addEventListener(`submit`, (e) => {
 console.log(`veikia`)
 
 
-loadToDisplay(searchText)
+loadToDisplay(getUrlParams(`search`))
 
 
 async function loadToDisplay(searchText) {

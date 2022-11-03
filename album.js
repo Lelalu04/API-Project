@@ -1,12 +1,8 @@
-import { createElement,createPSpanA } from "./function.js";
+import { createElement, getUrlParams, createPSpanA } from "./function.js";
 
 let container = document.querySelector(`.container-album`)
 
-let queryParams = document.location.search;
-let urlParams = new URLSearchParams(queryParams)
-let albumId = urlParams.get(`album_id`)
-
-fetch(`https://jsonplaceholder.typicode.com/albums/` + albumId + `/?_embed=photos&_expand=user`)
+fetch(`https://jsonplaceholder.typicode.com/albums/` + getUrlParams(`album_id`) + `/?_embed=photos&_expand=user`)
     .then(res => res.json())
     .then(album => {
         

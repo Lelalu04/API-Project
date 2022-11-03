@@ -1,3 +1,10 @@
+export function getUrlParams(getParm) {
+    let queryParams = document.location.search;
+let urlParams = new URLSearchParams(queryParams)
+let variable = urlParams.get(getParm)
+return variable
+}
+
 export function createElement(element, text) {
     let variable = document.createElement(element)
     variable.textContent = text

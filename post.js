@@ -1,11 +1,7 @@
-import { createElement,createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 let container = document.querySelector(`.container-post`)
 
-let queryParams = document.location.search;
-let urlParams = new URLSearchParams(queryParams)
-let postId = urlParams.get(`post_id`)
-
-fetch(`https://jsonplaceholder.typicode.com/posts/`+postId+`/?_embed=comments&_expand=user`)
+fetch(`https://jsonplaceholder.typicode.com/posts/`+ getUrlParams(`post_id`) +`/?_embed=comments&_expand=user`)
 .then(res => res.json())
 .then(post => {
     

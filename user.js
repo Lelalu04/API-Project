@@ -1,13 +1,7 @@
-import { createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 let container = document.querySelector(`.container-user`)
-// let userIds = window.parent.document.getElementById(`1`)
-// console.log(userIds)
-let queryParams = document.location.search;
-let urlParams = new URLSearchParams(queryParams)
-let userId = urlParams.get(`user_id`)
 
-
-fetch(`https://jsonplaceholder.typicode.com/users/` + userId + `?_embed=posts&_embed=albums`)
+fetch(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)
     .then(res => res.json())
     .then(user => {
         console.log(user)
