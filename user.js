@@ -37,7 +37,13 @@ async function renderUserInfo () {
 }    
 
 function renderAlbumAccordion(accordion,user){
-let albumsBody = accordionBase(accordion, `albums`, `albums`, `user`, `albums`, `Albums`)
+let albumsBody = accordionBase({
+    container: accordion, 
+    headerH:`albums`,
+    headerIdButtonIdCallapse: `albums`,
+    accordionContainerId: `user`,
+    ariaLabelledby: `albums`, 
+    textContent: `Albums`})
 
     let albumsUl = createElement(`ul`)
     albumsUl.setAttribute(`class`, `list-group`)
@@ -49,7 +55,13 @@ let albumsBody = accordionBase(accordion, `albums`, `albums`, `user`, `albums`, 
 }
 
 function renderPostAccordion(accordion,user) {
-    let postsBody = accordionBase(accordion, `posts`, `posts`, `user`, `posts`, `Posts`)
+    let postsBody = accordionBase({
+        container: accordion,
+        headerH: `posts`,
+        headerIdButtonIdCallapse: `posts`,
+        accordionContainerId: `user`,
+        ariaLabelledby: `posts`,
+        textContent: `Posts`})
 
     let postsUl = createElement(`ul`)
     postsUl.setAttribute(`class`, `list-group`)

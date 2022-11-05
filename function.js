@@ -69,7 +69,8 @@ export function createdAccordionBody() {
     accordionBody.setAttribute(`class`, "accordion-body")
     return accordionBody
 }
-export function accordionBase(container, headerH, headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby, textContent) {
+export function accordionBase(InfoObj) {
+    let {container, headerH, headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby, textContent} = InfoObj
     let postAccordionItem = createdivAccordionItem()
     let postAccordionH2 = createdivAccordionHeader(headerH, headerIdButtonIdCallapse)
     let postAccordionButton = createdAccordionButton(headerIdButtonIdCallapse)

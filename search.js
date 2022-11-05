@@ -37,7 +37,13 @@ async function searchFunc(category, buttonId, textContentBtn, findObj,searchText
     let containerAccordion = createContainerAccordion(`search`)
 
     let datas = await fetchData(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`)
-    let accordionBody = accordionBase(containerAccordion, `h2`, category, `search`, category, textContentBtn + `: (${[...datas].length})`)
+    let accordionBody = accordionBase({
+        container: containerAccordion, 
+        headerH2: `h2`,
+        headerIdButtonIdCallapse: category,
+        accordionContainerId: `search`,
+        ariaLabelledby: category, 
+        textContent: textContentBtn + `: (${[...datas].length})`})
     datas.map(data => {
         let ul = createElement(`ul`)
         ul.setAttribute(`class`, "list-group")
@@ -52,5 +58,6 @@ async function searchFunc(category, buttonId, textContentBtn, findObj,searchText
         accordionBody[0].append(ul)
     })
     container.append(containerAccordion)
+    
 
 }

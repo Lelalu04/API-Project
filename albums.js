@@ -4,6 +4,7 @@ init()
 
 function init() {
     renderAlbumsList()
+    header()
 }
 async function renderAlbumsList() {
 
@@ -17,7 +18,13 @@ async function renderAlbumsList() {
         let albumsAccordion = createContainerAccordion(`albums`)
         albums.map(album => {
             
-            let albumAccordionBody = accordionBase(albumsAccordion, `h2`, `album_${album.id}`, `albums`, `album_${album.id}`, album.title.toUpperCase())
+            let albumAccordionBody = accordionBase({
+                container: albumsAccordion,
+                headerH: `h2`,
+                headerIdButtonIdCallapse: `album_${album.id}`, 
+                accordionContainerId: `albums`,
+                ariaLabelledby: `album_${album.id}`,
+                textContent: album.title.toUpperCase()})
             
             let albumAutorP = createPSpanA(`Autor: `,`${album.user.name}`,`./user.html?user_id=${album.user.id}`)
 

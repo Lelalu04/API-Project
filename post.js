@@ -5,6 +5,7 @@ init()
 
 function init() {
     getPostInfo()
+    header()
 }
 
 async function getPostInfo() {
@@ -23,7 +24,13 @@ async function getPostInfo() {
 }
 
 function createAlbumsAccordion(accordion,post){
-    let albumsAccordionBody_btn = accordionBase(accordion, `h3`, `albums_${post.id}`, `comments-albums_${post.id}`, `albums_${post.id}`, `Albums`)
+    let albumsAccordionBody_btn = accordionBase({
+        container: accordion, 
+        headerH: `h3`, 
+        headerIdButtonIdCallapse: `albums_${post.id}`,
+        accordionContainerId: `comments-albums_${post.id}`,
+        ariaLabelledby: `albums_${post.id}`,
+        textContent: `Albums`})
     let albumsAccordion;
     albumsAccordionBody_btn[1].addEventListener(`click`, async () => {
         if (!albumsAccordion) {
@@ -32,7 +39,13 @@ function createAlbumsAccordion(accordion,post){
     
             albums.map((album) => {
     
-                let albumAccordionBody = accordionBase(albumsAccordion, `h3`, `album_${album.id}`, `album_${post.id}`, `album_${album.id}`, album.title.toUpperCase())
+                let albumAccordionBody = accordionBase({
+                    container: albumsAccordion,
+                    headerH: `h3`,
+                    headerIdButtonIdCallapse: `album_${album.id}`,
+                    accordionContainerId: `album_${post.id}`,
+                    ariaLabelledby: `album_${album.id}`,
+                    textContent: album.title.toUpperCase()})
     
                 let br = createElement(`br`)
                 let albumsA = createElement(`a`, `${album.title.toUpperCase()}.`)
@@ -50,7 +63,13 @@ function createAlbumsAccordion(accordion,post){
 }
 
 function createCommentsAccordion(accordion,post) {
-let commentsAccordionBody_btn = accordionBase(accordion, `h3`, `comments_${post.id}`, `comments-albums_${post.id}`, `comments_${post.id}`, `Comments`)
+let commentsAccordionBody_btn = accordionBase({
+    container: accordion,
+    headerH: `h3`,
+    headerIdButtonIdCallapse: `comments_${post.id}`,
+    accordionContainerId: `comments-albums_${post.id}`,
+    ariaLabelledby: `comments_${post.id}`,
+    textContent: `Comments`})
     let commentsAccordion;
     commentsAccordionBody_btn[1].addEventListener(`click`, async () => {
     if (!commentsAccordion) {
@@ -58,7 +77,13 @@ let commentsAccordionBody_btn = accordionBase(accordion, `h3`, `comments_${post.
         commentsAccordion = createContainerAccordion(`comment_${post.id}`)
         comments.map(comment => {
 
-            let commentAccordionBody = accordionBase(commentsAccordion, `h3`, `comment_${comment.id}`, `comment_${post.id}`, `comment_${comment.id}`, comment.name.toUpperCase())
+            let commentAccordionBody = accordionBase({
+                container: commentsAccordion,
+                headerH: `h3`,
+                headerIdButtonIdCallapse: `comment_${comment.id}`,
+                accordionContainerId: `comment_${post.id}`,
+                ariaLabelledby: `comment_${comment.id}`,
+                textContent: comment.name.toUpperCase()})
 
             let commentBodyP = createElement(`p`, firstLetterUpperCase(comment.body))
             let commentEmailP = createPSpanA(`Email: `, comment.email, `mailto:${comment.email}`)

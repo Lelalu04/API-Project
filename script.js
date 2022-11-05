@@ -1,37 +1,52 @@
-import { firstLetterUpperCase,fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { firstLetterUpperCase, fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 
 init()
 function init() {
     LoadToDisplay()
+    header()
 }
 async function LoadToDisplay() {
-    
+
     let container = document.querySelector(`.container-home`)
     let containerAccordion = createContainerAccordion(`post`)
     container.append(containerAccordion)
 
     let posts = await fetchData(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
     posts.map(post => {
-    
-        let postAccordionBody_button = accordionBase(containerAccordion, `h2`, post.id, `post`, `post`, post.title.toUpperCase())
-    
+
+        let postAccordionBody_button = accordionBase({
+            container: containerAccordion,
+            headerH: `h2`,
+            headerIdButtonIdCallapse: post.id,
+            accordionContainerId: `post`,
+            ariaLabelledby: `post`,
+            textContent: post.title.toUpperCase()
+        })
+
         let linkToFullPost = createElement(`a`, `See Full Post`)
         linkToFullPost.setAttribute(`href`, `./post.html?post_id=${post.id}`)
-    
+
         let postBodyP = createElement(`p`, firstLetterUpperCase(post.body))
         let nameP = createPSpanA(`Name: `, `${post.user.name}`, `./user.html?user_id=${post.user.id}`)
-    
+
         let albums_CommentsAccordion = createContainerAccordion(`comments-albums_${post.id}`)
         postAccordionBody_button[0].append(linkToFullPost, postBodyP, nameP, albums_CommentsAccordion)
-    
+
         createAlbumsAccordion(albums_CommentsAccordion, post)
         createCommnetsAccordion(albums_CommentsAccordion, post)
     })
 }
 
 function createCommnetsAccordion(accordion, post) {
-    let commentsAccordionBody_button = accordionBase(accordion, `h3`, `comments_${post.id}`, `comments-albums_${post.id}`, `comments_${post.id}`, `Comments`)
+    let commentsAccordionBody_button = accordionBase({
+        container: accordion,
+        headerH: `h3`,
+        headerIdButtonIdCallapse: `comments_${post.id}`,
+        accordionContainerId: `comments-albums_${post.id}`,
+        ariaLabelledby: `comments_${post.id}`,
+        textContent: `Comments`
+    })
     let commentsAccordion;
     commentsAccordionBody_button[1].addEventListener(`click`, async () => {
         if (!commentsAccordion) {
@@ -39,7 +54,14 @@ function createCommnetsAccordion(accordion, post) {
             commentsAccordion = createContainerAccordion(`comment_${post.id}`)
             comments.map(comment => {
 
-                let commentAccordionBody_button = accordionBase(commentsAccordion, `h3`, `comment_${comment.id}`, `comment_${post.id}`, `comment_${comment.id}`, comment.name)
+                let commentAccordionBody_button = accordionBase({
+                    container: commentsAccordion,
+                    headerH: `h3`,
+                    headerIdButtonIdCallapse: `comment_${comment.id}`,
+                    accordionContainerId: `comment_${post.id}`,
+                    ariaLabelledby: `comment_${comment.id}`,
+                    textContent: comment.name
+                })
 
                 let commentBodyP = createElement(`p`, comment.name)
                 let commentEmailP = createPSpanA(`Email: `, comment.email, `mailto:${comment.email}`)
@@ -51,7 +73,14 @@ function createCommnetsAccordion(accordion, post) {
     })
 }
 function createAlbumsAccordion(accordion, post) {
-    let albumsAccordionBody_button = accordionBase(accordion, `h3`, `albums_${post.id}`, `comments-albums_${post.id}`, `albums_${post.id}`, `Albums`)
+    let albumsAccordionBody_button = accordionBase({
+        container: accordion,
+        headerH: `h3`,
+        headerIdButtonIdCallapse: `albums_${post.id}`,
+        accordionContainerId: `comments-albums_${post.id}`,
+        ariaLabelledby: `albums_${post.id}`,
+        textContent: `Albums`
+    })
     let albumsAccordion;
     albumsAccordionBody_button[1].addEventListener(`click`, async () => {
         if (!albumsAccordion) {
@@ -60,7 +89,14 @@ function createAlbumsAccordion(accordion, post) {
             albumsAccordion = createContainerAccordion(`album_${post.id}`)
             albums.map((album) => {
 
-                let albumAccordionBody_button = accordionBase(albumsAccordion, `h3`, `album_${album.id}`, `album_${post.id}`, `album_${album.id}`, album.title.toUpperCase())
+                let albumAccordionBody_button = accordionBase({
+                    container: albumsAccordion,
+                    headerH: `h3`,
+                    headerIdButtonIdCallapse: `album_${album.id}`,
+                    accordionContainerId: `album_${post.id}`,
+                    ariaLabelledby: `album_${album.id}`,
+                    textContent: album.title.toUpperCase()
+                })
 
                 let br = createElement(`br`)
                 let albumsA = createElement(`a`, `${album.title.toUpperCase()}.`)
