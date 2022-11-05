@@ -1,10 +1,11 @@
-import { firstLetterUpperCase,asyncAwaitFetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
+import { firstLetterUpperCase,fetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 init()
 
 function init() {
     outerSearchForm()
     innerSearchForm() 
+    header()
 }
 function outerSearchForm() {
     loadToDisplay(getUrlParams(`search`))
@@ -35,11 +36,13 @@ async function searchFunc(category, buttonId, textContentBtn, findObj,searchText
     let container = document.querySelector(`.container-search`)
     let containerAccordion = createContainerAccordion(`search`)
 
-    let datas = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`)
+    let datas = await fetchData(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`)
     let accordionBody = accordionBase(containerAccordion, `h2`, category, `search`, category, textContentBtn + `: (${[...datas].length})`)
     datas.map(data => {
         let ul = createElement(`ul`)
+        ul.setAttribute(`class`, "list-group")
         let li = createElement(`li`)
+        li.setAttribute(`class`, `list-group-item`)
 
         let nameA = createElement('a', `${firstLetterUpperCase(data[findObj])}`)
         nameA.setAttribute(`href`, `./${buttonId}.html?${buttonId}_id=${data.id}`)

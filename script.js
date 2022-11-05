@@ -1,4 +1,4 @@
-import { firstLetterUpperCase,asyncAwaitFetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { firstLetterUpperCase,fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 
 init()
@@ -11,7 +11,7 @@ async function LoadToDisplay() {
     let containerAccordion = createContainerAccordion(`post`)
     container.append(containerAccordion)
 
-    let posts = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
+    let posts = await fetchData(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
     posts.map(post => {
     
         let postAccordionBody_button = accordionBase(containerAccordion, `h2`, post.id, `post`, `post`, post.title.toUpperCase())
@@ -35,7 +35,7 @@ function createCommnetsAccordion(accordion, post) {
     let commentsAccordion;
     commentsAccordionBody_button[1].addEventListener(`click`, async () => {
         if (!commentsAccordion) {
-            let comments = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
+            let comments = await fetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
             commentsAccordion = createContainerAccordion(`comment_${post.id}`)
             comments.map(comment => {
 
@@ -56,7 +56,7 @@ function createAlbumsAccordion(accordion, post) {
     albumsAccordionBody_button[1].addEventListener(`click`, async () => {
         if (!albumsAccordion) {
 
-            let albums = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
+            let albums = await fetchData(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
             albumsAccordion = createContainerAccordion(`album_${post.id}`)
             albums.map((album) => {
 

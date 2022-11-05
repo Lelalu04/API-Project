@@ -1,4 +1,4 @@
-import { asyncAwaitFetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { fetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 
 init()
@@ -11,7 +11,7 @@ async function renderUserInfo () {
     
     let container = document.querySelector(`.container-user`)
     
-    let user = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)
+    let user = await fetchData(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`)
     let idP = createElement(`p`, `ID: ${user.id}`)
     let nameP = createElement(`p`, `Name: ${user.name}`)
     let usernameP = createElement(`p`, `User Name: ${user.username}`)
@@ -31,6 +31,7 @@ async function renderUserInfo () {
     container.append(idP, nameP, usernameP, emailP, addressP, phoneP, websiteP, companyP, ul, accordionContainer) 
     renderAlbumAccordion(accordionContainer,user)
     renderPostAccordion(accordionContainer,user)
+    header()
     
 
 }    

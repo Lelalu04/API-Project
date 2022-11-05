@@ -1,4 +1,4 @@
-export async function asyncAwaitFetchData(link) {
+export async function fetchData(link) {
     const res = await fetch(link);
     const datas = await res.json();
     return datas
@@ -10,9 +10,12 @@ let variable = urlParams.get(getParm)
 return variable
 }
 
-export function createElement(element, text) {
+export function createElement(element, text, className) {
     let variable = document.createElement(element)
     variable.textContent = text
+    if(className){
+        variable.className = className
+    }
     return variable
 }
 export function createPSpanA(pTextContent, aTextContent, aHref) {

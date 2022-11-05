@@ -1,4 +1,4 @@
-import { asyncAwaitFetchData, createElement } from "./function.js";
+import { fetchData, createElement } from "./function.js";
 import header from "./header.js";
 init()
 
@@ -8,7 +8,7 @@ function init() {
 async function renderUsersList() {
     let container = document.querySelector(`.container-users`)
     
-    let users = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/?_embed=posts`)
+    let users = await fetchData(`https://jsonplaceholder.typicode.com/users/?_embed=posts`)
     let ListH2 = createElement(`h2`, `Users List:`)
     let ul = createElement(`ul`)
     ul.setAttribute(`class`, "list-group")
@@ -21,5 +21,6 @@ async function renderUsersList() {
         ul.append(li)
     })
     container.append(ListH2, ul)
+    header()
     
 }

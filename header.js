@@ -1,4 +1,4 @@
-export default init()
+export default init
 
 function init() {
     let form = createForm() 

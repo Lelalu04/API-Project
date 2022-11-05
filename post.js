@@ -1,4 +1,4 @@
-import { firstLetterUpperCase,asyncAwaitFetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { firstLetterUpperCase,fetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 
 init()
@@ -10,7 +10,7 @@ function init() {
 async function getPostInfo() {
     let container = document.querySelector(`.container-post`)
     
-    let post = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts/` + getUrlParams(`post_id`) + `/?_embed=comments&_expand=user`)
+    let post = await fetchData(`https://jsonplaceholder.typicode.com/posts/` + getUrlParams(`post_id`) + `/?_embed=comments&_expand=user`)
     let postTitle = createElement(`h2`, post.title.toUpperCase())
     let postBodyP = createElement(`p`, firstLetterUpperCase(post.body))
     let nameP = createPSpanA(`Name: `, `${post.user.name}`, `./user.html?user_id=${post.user.id}`)
@@ -27,7 +27,7 @@ function createAlbumsAccordion(accordion,post){
     let albumsAccordion;
     albumsAccordionBody_btn[1].addEventListener(`click`, async () => {
         if (!albumsAccordion) {
-            let albums = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
+            let albums = await fetchData(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
             albumsAccordion = createContainerAccordion(`div`, `album_${post.id}`)
     
             albums.map((album) => {
@@ -54,7 +54,7 @@ let commentsAccordionBody_btn = accordionBase(accordion, `h3`, `comments_${post.
     let commentsAccordion;
     commentsAccordionBody_btn[1].addEventListener(`click`, async () => {
     if (!commentsAccordion) {
-        let comments = await asyncAwaitFetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
+        let comments = await fetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
         commentsAccordion = createContainerAccordion(`comment_${post.id}`)
         comments.map(comment => {
 
