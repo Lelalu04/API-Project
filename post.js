@@ -16,7 +16,10 @@ async function getPostInfo() {
     let postBodyP = createElement(`p`, firstLetterUpperCase(post.fetchInfo.body))
     let nameP = createPSpanA(`Name: `, `${post.fetchInfo.user.name}`, `./user.html?user_id=${post.fetchInfo.user.id}`)
     
-    post.container.prepend(postTitle, postBodyP, nameP)
+    let editPost = createElement('a', `Edit`)
+        editPost.setAttribute(`href`, `./edit-post.html?post_id=${getUrlParams(`post_id`)}`)
+
+    post.container.prepend(postTitle, postBodyP, nameP, editPost)
     
     createAlbumsAccordionAddEvent(post.accordion,post.fetchInfo)
     createCommentsAccordionAddEvent(post.accordion,post.fetchInfo)

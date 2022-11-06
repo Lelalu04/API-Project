@@ -16,7 +16,6 @@ posts.fetchInfo.map(post => {
         let postA = createElement('a', `${post.title.toUpperCase()}`)
         postA.setAttribute(`href`, `./post.html?post_id=${post.id}`)
 
-
         li.append(postA)
         ul.append(li)
 })
