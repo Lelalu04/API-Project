@@ -1,5 +1,5 @@
 import { fetchData, createElement } from "./function.js";
-import { addToApiPost } from "./methods.js";
+import { addToApiPost } from "./function_resource.js";
 let select = document.getElementById(`select-name`)
 let form = document.getElementById(`post-create`)
 let review = document.querySelector(`.container-review`)
@@ -12,7 +12,7 @@ users.map(user => {
     select.append(option)
 })
 
-form.addEventListener(`submit`, (e) => {
+form.addEventListener(`submit`, async (e) => {
     e.preventDefault()
     let result = document.querySelector(`.review-result`)
     if(result){
@@ -22,5 +22,6 @@ form.addEventListener(`submit`, (e) => {
     let body = e.target.elements[`textarea-content`].value  
     let user = e.target.elements[`select-name`]
     
-    review.append(addToApiPost(title,body,user.value))
+    review.append(await addToApiPost(title,body,user.value))
+    console.log(review)
 })
