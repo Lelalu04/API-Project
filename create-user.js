@@ -46,13 +46,11 @@ form.addEventListener(`submit`, async (e) => {
                 geo: {
                     lat ,
                     lng ,
-                }
-            },
+                }},
             company:{
                 companyName,
                 catchPhrase,
                 bs
-
             }
         }
     }
