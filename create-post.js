@@ -23,13 +23,15 @@ form.addEventListener(`submit`, async (e) => {
     let user = e.target.elements[`select-name`]
     
     let obj = {
-        link: `https://jsonplaceholder.typicode.com/users`,
+        link: `https://jsonplaceholder.typicode.com/posts`,
         method: `POST`,
-        title,
-        body,
-        userId: user.value
+        bodyObj: {
+            title,
+            body,
+            userId: user.value
+        }
     }
 
-    review.append(await addToApiPost(obj))
+    review.append(await addToApiPost(obj, `post`))
     console.log(review)
 })

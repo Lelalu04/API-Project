@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-user-create">
+    <form id="user-create">
+        <input type="text" id="input-name" placeholder="Name">
+        <input type="text" id="input-userName" placeholder="User name">
+        <input type="email" id="input-email" placeholder="Email">
+        <input type="tel" id="input-phoneNumber" placeholder="Phone number">
+        <input type="url" id="input-website" placeholder="Website">
+        <fieldset class="address">
+            <legend>Address</legend>
+            <input type="text" id="input-street" placeholder="Street">
+            <input type="text" id="input-suite" placeholder="Suite">
+            <input type="text" id="input-city" placeholder="City">
+            <input type="text" id="input-zipcode" placeholder="Zipcode">
+            <input type="number" id="input-lat" placeholder="Geo: lat">
+            <input type="number" id="input-lng" placeholder="Geo: lng">
+        </fieldset>
+        <fieldset class="company">
+            <legend>company</legend>
+            <input type="text" id="input-companyName" placeholder="Name">
+            <input type="text" id="input-catchPhrase" placeholder="Catch Phrase">
+            <input type="text" id="input-bs" placeholder="BS">
+        </fieldset>
+        <input type="submit" value="Add User">
+    </form>
+</div>
+    <div class="container-review"></div>
+    <script type="module" src="create-user.js"></script>
+</body>
+
+</html>
+
+<!-- 
+"id": 1,
+"name": "Leanne Graham",
+"username": "Bret",
+"email": "Sincere@april.biz",
+"address": {
+"street": "Kulas Light",
+"suite": "Apt. 556",
+"city": "Gwenborough",
+"zipcode": "92998-3874",
+"geo": {
+"lat": "-37.3159",
+"lng": "81.1496"
+}
+},
+"phone": "1-770-736-8031 x56442",
+"website": "hildegard.org",
+"company": {
+"name": "Romaguera-Crona",
+"catchPhrase": "Multi-layered client-server neural-net",
+"bs": "harness real-time e-markets"
+} -->

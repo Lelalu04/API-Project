@@ -11,6 +11,8 @@ async function renderAlbumsList() {
     let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`,`albums`)
     let h2 = createElement(`h2`, `Albums List: `)
     let h2Span = createElement(`span`, `(${[...albums.fetchInfo].length})`)
+    let createAlbum = createElement('a', `Create Album`)
+    createAlbum.setAttribute(`href`, `./create-album.html`)
     h2.append(h2Span)
     
     albums.fetchInfo.map(album => {
@@ -36,5 +38,5 @@ async function renderAlbumsList() {
 
         albumAccordionBody[0].append(albumfullInfoA, albumAutorP, albumsImg)
     })
-    albums.container.prepend(h2)
+    albums.container.prepend(createAlbum, h2)
 }
