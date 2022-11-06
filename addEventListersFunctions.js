@@ -1,5 +1,5 @@
 
-import { firstLetterUpperCase, fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 
 
 export function createAlbumsAccordionAddEvent(accordion, post) {

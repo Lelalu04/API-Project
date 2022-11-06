@@ -1,4 +1,4 @@
-import { firstLetterUpperCase,fetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { appendToContainer_returnFetch, firstLetterUpperCase,fetchData, createElement, getUrlParams, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 import {createAlbumsAccordionAddEvent, createCommentsAccordionAddEvent} from "./addEventListersFunctions.js";
 
@@ -10,19 +10,14 @@ function init() {
 }
 
 async function getPostInfo() {
-    let container = document.querySelector(`.container-post`)
+    let post = await appendToContainer_returnFetch(`.container-post`, `https://jsonplaceholder.typicode.com/posts/` + getUrlParams(`post_id`) + `/?_embed=comments&_expand=user`,`comments-albums_`)
+
+    let postTitle = createElement(`h2`, post.fetchInfo.title.toUpperCase())
+    let postBodyP = createElement(`p`, firstLetterUpperCase(post.fetchInfo.body))
+    let nameP = createPSpanA(`Name: `, `${post.fetchInfo.user.name}`, `./user.html?user_id=${post.fetchInfo.user.id}`)
     
-    let post = await fetchData(`https://jsonplaceholder.typicode.com/posts/` + getUrlParams(`post_id`) + `/?_embed=comments&_expand=user`)
-    let postTitle = createElement(`h2`, post.title.toUpperCase())
-    let postBodyP = createElement(`p`, firstLetterUpperCase(post.body))
-    let nameP = createPSpanA(`Name: `, `${post.user.name}`, `./user.html?user_id=${post.user.id}`)
+    post.container.prepend(postTitle, postBodyP, nameP)
     
-    let albums_CommentsAccordion = createContainerAccordion(`comments-albums_${post.id}`)
-    container.append(postTitle, postBodyP, nameP, albums_CommentsAccordion)
-    
-    createAlbumsAccordionAddEvent(albums_CommentsAccordion,post)
-    createCommentsAccordionAddEvent(albums_CommentsAccordion,post)
+    createAlbumsAccordionAddEvent(post.accordion,post.fetchInfo)
+    createCommentsAccordionAddEvent(post.accordion,post.fetchInfo)
 }
-
-
-

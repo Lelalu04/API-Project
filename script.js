@@ -1,4 +1,4 @@
-import { firstLetterUpperCase, fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { appendToContainer_returnFetch,firstLetterUpperCase, fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 import {createAlbumsAccordionAddEvent,createCommentsAccordionAddEvent} from "./addEventListersFunctions.js";
 
@@ -9,15 +9,12 @@ function init() {
 }
 async function LoadToDisplay() {
 
-    let container = document.querySelector(`.container-home`)
-    let containerAccordion = createContainerAccordion(`post`)
-    container.append(containerAccordion)
+    let posts = await appendToContainer_returnFetch(`.container-home`,`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`,`post`)
 
-    let posts = await fetchData(`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`)
-    posts.map(post => {
+    posts.fetchInfo.map(post => {
 
         let postAccordionBody_button = accordionBase({
-            container: containerAccordion,
+            container: posts.accordion,
             headerH: `h2`,
             headerIdButtonIdCallapse: post.id,
             accordionContainerId: `post`,

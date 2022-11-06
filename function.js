@@ -1,3 +1,30 @@
+export async function appendToContainer_returnFetch(containerClassName, fetchLink, accordionId) {
+    let container = document.querySelector(containerClassName)
+    let fetchInfo = await fetchData(fetchLink)
+
+    if (accordionId) {
+        let accordion 
+        if(fetchInfo.id){
+            accordion = createContainerAccordion(accordionId + fetchInfo.id)
+            container.append(accordion)
+        }else {
+            accordion = createContainerAccordion(accordionId)
+            container.append(accordion)
+        }
+        let obj = {
+            fetchInfo,
+            container,
+            accordion
+        }
+        return obj
+    }
+    let obj = {
+        container,
+        fetchInfo
+    }
+    return obj
+}
+
 export async function fetchData(link) {
     const res = await fetch(link);
     const datas = await res.json();
@@ -8,6 +35,21 @@ export function getUrlParams(getParm) {
 let urlParams = new URLSearchParams(queryParams)
 let variable = urlParams.get(getParm)
 return variable
+}
+
+export function createElementLi(ul, textContent) {
+    let li = document.createElement(`li`)
+    li.setAttribute(`class`, "list-group-item")
+    li.textContent = textContent
+    ul.append(li)
+    return li
+}
+
+export function createElementAInnerLi(title, link, ul) {
+    let a = createElement('a', title)
+    a.setAttribute(`href`, link)
+    let li = createElementLi(ul)
+    li.append(a)
 }
 
 export function createElement(element, text, className) {
@@ -34,18 +76,14 @@ export function createContainerAccordion(id) {
     containerAccordion.setAttribute(`id`, `accordion-${id}`)
     return containerAccordion
 }
-export function createdivAccordionItem() {
-    let accordionItem = document.createElement(`div`)
-    accordionItem.setAttribute(`class`, `accordion-item`)
-    return accordionItem
-}
-export function createdivAccordionHeader(element, id) {
+
+function createdivAccordionHeader(element, id) {
     let accordionH2 = document.createElement(element)
     accordionH2.setAttribute(`class`, `accordion-header`)
     accordionH2.setAttribute(`id`, `heading_${id}`)
     return accordionH2
 }
-export function createdAccordionButton(id) {
+function createdAccordionButton(id) {
     let accordionButton = document.createElement(`button`)
     accordionButton.setAttribute(`class`, `accordion-button collapsed`)
     accordionButton.setAttribute(`data-bs-toggle`, `collapse`)
@@ -55,7 +93,7 @@ export function createdAccordionButton(id) {
      // postAccordionButton.setAttribute(`aria-expanded`, "false")
     return accordionButton
 }
-export function createdAccordionCollapse(id, dataBsParent, ariaLabelledby) {
+function createdAccordionCollapse(id, dataBsParent, ariaLabelledby) {
     let accordionCollapse = document.createElement(`div`)
     accordionCollapse.setAttribute(`class`, `accordion-collapse collapse`)
     accordionCollapse.setAttribute(`id`, `collapse_${id}`)
@@ -64,19 +102,15 @@ export function createdAccordionCollapse(id, dataBsParent, ariaLabelledby) {
 
     return accordionCollapse
 }
-export function createdAccordionBody() {
-    let accordionBody = document.createElement(`div`)
-    accordionBody.setAttribute(`class`, "accordion-body")
-    return accordionBody
-}
+
 export function accordionBase(InfoObj) {
     let {container, headerH, headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby, textContent} = InfoObj
-    let postAccordionItem = createdivAccordionItem()
+    let postAccordionItem = createElement(`div`, ``, `accordion-item`)
     let postAccordionH2 = createdivAccordionHeader(headerH, headerIdButtonIdCallapse)
     let postAccordionButton = createdAccordionButton(headerIdButtonIdCallapse)
     postAccordionButton.textContent = textContent
     let postAccordionCollapse = createdAccordionCollapse(headerIdButtonIdCallapse, accordionContainerId, ariaLabelledby)
-    let postAccordionBody = createdAccordionBody()
+    let postAccordionBody = createElement(`div`, ``, "accordion-body")
 
     postAccordionCollapse.append(postAccordionBody)
     postAccordionH2.append(postAccordionButton)

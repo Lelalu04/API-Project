@@ -1,4 +1,4 @@
-import { fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { appendToContainer_returnFetch,fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 init()
 
@@ -8,18 +8,15 @@ function init() {
 }
 async function renderAlbumsList() {
 
-    let container = document.querySelector(`.container-albums`)
-
-    let albums = await fetchData(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`)
+    let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`,`albums`)
     let h2 = createElement(`h2`, `Albums List: `)
-    let h2Span = createElement(`span`, `(${[...albums].length})`)
+    let h2Span = createElement(`span`, `(${[...albums.fetchInfo].length})`)
     h2.append(h2Span)
-    container.append(h2)
-    let albumsAccordion = createContainerAccordion(`albums`)
-    albums.map(album => {
+    
+    albums.fetchInfo.map(album => {
 
         let albumAccordionBody = accordionBase({
-            container: albumsAccordion,
+            container: albums.accordion,
             headerH: `h2`,
             headerIdButtonIdCallapse: `album_${album.id}`,
             accordionContainerId: `albums`,
@@ -39,5 +36,5 @@ async function renderAlbumsList() {
 
         albumAccordionBody[0].append(albumfullInfoA, albumAutorP, albumsImg)
     })
-    container.append(albumsAccordion)
+    albums.container.prepend(h2)
 }

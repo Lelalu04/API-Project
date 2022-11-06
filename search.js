@@ -1,4 +1,4 @@
-import { firstLetterUpperCase,fetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
+import { appendToContainer_returnFetch,firstLetterUpperCase,fetchData,createElement, getUrlParams, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 init()
 
@@ -33,22 +33,18 @@ async function loadToDisplay(searchText) {
 }
 
 async function searchFunc(category, buttonId, textContentBtn, findObj,searchText) {
-    let container = document.querySelector(`.container-search`)
-    let containerAccordion = createContainerAccordion(`search`)
 
-    let datas = await fetchData(`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`)
+    let datas = await appendToContainer_returnFetch(`.container-search`,`https://jsonplaceholder.typicode.com/${category}?q=${searchText}`,`search`)
     let accordionBody = accordionBase({
-        container: containerAccordion, 
+        container: datas.accordion, 
         headerH2: `h2`,
         headerIdButtonIdCallapse: category,
         accordionContainerId: `search`,
         ariaLabelledby: category, 
-        textContent: textContentBtn + `: (${[...datas].length})`})
-    datas.map(data => {
-        let ul = createElement(`ul`)
-        ul.setAttribute(`class`, "list-group")
-        let li = createElement(`li`)
-        li.setAttribute(`class`, `list-group-item`)
+        textContent: textContentBtn + `: (${[...datas.fetchInfo].length})`})
+    datas.fetchInfo.map(data => {
+        let ul = createElement(`ul`, "", "list-group")
+        let li = createElement(`li`, "", `list-group-item`)
 
         let nameA = createElement('a', `${firstLetterUpperCase(data[findObj])}`)
         nameA.setAttribute(`href`, `./${buttonId}.html?${buttonId}_id=${data.id}`)
@@ -57,7 +53,4 @@ async function searchFunc(category, buttonId, textContentBtn, findObj,searchText
         ul.append(li)
         accordionBody[0].append(ul)
     })
-    container.append(containerAccordion)
-    
-
 }

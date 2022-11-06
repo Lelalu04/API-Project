@@ -1,13 +1,10 @@
-import { fetchData,createElement } from "./function.js";
+import { appendToContainer_returnFetch,fetchData,createElement } from "./function.js";
 import header from "./header.js";
 
-let container = document.querySelector(`.container-posts`)
-
-        let posts = await fetchData(`https://jsonplaceholder.typicode.com/posts`)
+        let posts = await appendToContainer_returnFetch(`.container-posts`,`https://jsonplaceholder.typicode.com/posts`)
         let ListH2 = createElement(`h2`, `Posts List:`)
-        let ul = createElement(`ul`)
-        ul.setAttribute(`class`, "list-group")
-        posts.map(post => {
+        let ul = createElement(`ul`, "", "list-group")
+        posts.fetchInfo.map(post => {
         
         let li = createElement(`li`)
         li.setAttribute(`class`, `list-group-item`)
@@ -18,6 +15,6 @@ let container = document.querySelector(`.container-posts`)
         li.append(postA)
         ul.append(li)
         })
-        container.append(ListH2,ul)
+        posts.container.append(ListH2,ul)
         header()
 
