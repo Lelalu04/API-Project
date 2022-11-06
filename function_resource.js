@@ -28,15 +28,19 @@ async function showResult(data,whichElement) {
         div.append(idP, nameP, usernameP, emailP, addressP, phoneP, websiteP, companyP, ul)
     }
     else if(whichElement === `post`){
-        let h3 = createElement(`h3`, data.title)
-        let p = createElement(`p`, data.body)
+        let h3 = createElement(`h3`, `Post Title: ${data.title}`)
+        let p = createElement(`p`, `Post Body: ${data.body}`)
         let user = await fetchData(`https://jsonplaceholder.typicode.com/users/` + data.userId)
     
         let userP = createPSpanA(`Autor: `, user.name, `./user.html?user_id=${data.userId}`)
         div.append(h3, p, userP)
     }
-    else if(whichElement === `post`){
-
+    else if(whichElement === `album`){
+        let h3 = createElement(`h3`, `Album Title: ${data.title}`)
+        let user = await fetchData(`https://jsonplaceholder.typicode.com/users/` + data.userId)
+    
+        let userP = createPSpanA(`Autor: `, user.name, `./user.html?user_id=${data.userId}`)
+        div.append(h3, userP)
     }
     return div
 }
