@@ -9,7 +9,7 @@ function init() {
 
 async function renderUserInfo() {
     let user = await appendToContainer_returnFetch(`.container-user`, `https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`) + `?_embed=posts&_embed=albums`, `user`)
-    console.log(user)
+
     let idP = createElement(`p`, `ID: ${user.fetchInfo.id}`)
     let nameP = createElement(`p`, `Name: ${user.fetchInfo.name}`)
     let usernameP = createElement(`p`, `User Name: ${user.fetchInfo.username}`)
@@ -25,7 +25,10 @@ async function renderUserInfo() {
     createElementLi(ul, `Catch phrase: ${user.fetchInfo.company.catchPhrase}`)
     createElementLi(ul, `BS: ${user.fetchInfo.company.bs}`)
 
-    user.container.prepend(idP, nameP, usernameP, emailP, addressP, phoneP, websiteP, companyP, ul)
+        let editUser = createElement('a', `Edit`)
+        editUser.setAttribute(`href`, `./edit-user.html?user_id=${user.fetchInfo.id}`)
+
+    user.container.prepend(editUser, idP, nameP, usernameP, emailP, addressP, phoneP, websiteP, companyP, ul)
     renderAlbumAccordion(user.accordion, user.fetchInfo)
     renderPostAccordion(user.accordion, user.fetchInfo)
 }
