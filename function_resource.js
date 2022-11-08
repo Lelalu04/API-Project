@@ -41,6 +41,15 @@ async function showResult(data,whichElement) {
     
         let userP = createPSpanA(`Autor: `, user.name, `./user.html?user_id=${data.userId}`)
         div.append(h3, userP)
+    } 
+    else if (whichElement === `comment`){
+        let obj = {
+            name: data.name,
+            body: data.body,
+            email: data.email,
+            id: data.id
+        }
+        return obj
     }
     return div
 }

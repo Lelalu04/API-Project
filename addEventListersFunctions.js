@@ -74,5 +74,21 @@ export function createCommentsAccordionAddEvent(accordion, post) {
                 commentsAccordionBody_button[0].append(commentsAccordion)
             })
         }
+        // if (postComment){
+        //     let commentAccordionBody_button = accordionBase({
+        //         container: commentsAccordion,
+        //         headerH: `h3`,
+        //         headerIdButtonIdCallapse: `comment_${postComment.id}`,
+        //         accordionContainerId: `comment_${post.id}`,
+        //         ariaLabelledby: `comment_${postComment.id}`,
+        //         textContent: postComment.name
+        //     })
+
+        //     let commentBodyP = createElement(`p`, postComment.name)
+        //     let commentEmailP = createPSpanA(`Email: `, postComment.email, `mailto:${postComment.email}`)
+
+        //     commentAccordionBody_button[0].append(commentBodyP, commentEmailP)
+        //     commentsAccordionBody_button[0].append(commentsAccordion)
+        // }
     })
 }

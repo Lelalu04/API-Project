@@ -1,10 +1,10 @@
 import { fetchData, createElement, getUrlParams } from "./function.js";
 import { addToApiPost } from "./function_resource.js";
-let select = document.getElementById(`select-name`)
 let form = document.getElementById(`post-edit`)
+let review = document.querySelector(`.container-review`)
+let select = document.getElementById(`select-name`)
 let titleInput = document.getElementById(`input-title`)
 let bodyInput = document.getElementById(`textarea-content`)
-let review = document.querySelector(`.container-review`)
 
 let users = await fetchData(`https://jsonplaceholder.typicode.com/users`)
 
@@ -14,7 +14,6 @@ users.map(user => {
     select.append(option)
 })
 let post = await fetchData(`https://jsonplaceholder.typicode.com/posts/` + getUrlParams(`post_id`))
-
 
 titleInput.value = post.title
 bodyInput.value = post.body

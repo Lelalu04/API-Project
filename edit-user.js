@@ -1,10 +1,9 @@
-import { fetchData, createElement, getUrlParams } from "./function.js";
+import { fetchData, getUrlParams } from "./function.js";
 import { addToApiPost } from "./function_resource.js";
 let form = document.getElementById(`user-edit`)
 let review = document.querySelector(`.container-review`)
 
 let user = await fetchData(`https://jsonplaceholder.typicode.com/users/` + getUrlParams(`user_id`))
-
 
 document.getElementById(`input-name`).value = user.name
 document.getElementById(`input-userName`).value = user.username
@@ -20,7 +19,6 @@ document.getElementById(`input-lng`).value = user.address.geo.lng
 document.getElementById(`input-companyName`).value = user.company.name
 document.getElementById(`input-catchPhrase`).value = user.company.catchPhrase
 document.getElementById(`input-bs`).value = user.company.bs
-
 
 
 form.addEventListener(`submit`, async (e) => {
@@ -44,8 +42,6 @@ form.addEventListener(`submit`, async (e) => {
     let companyName = element[`input-companyName`].value
     let catchPhrase = element[`input-catchPhrase`].value
     let bs = element[`input-bs`].value
-
-    console.log(name)
 
     let obj = {
         link: `https://jsonplaceholder.typicode.com/users/` + user.id,
