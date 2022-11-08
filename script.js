@@ -4,13 +4,7 @@ import {createAlbumsAccordionAddEvent,createCommentsAccordionAddEvent} from "./a
 
 import page from "./page.js";
 
-let pageCount
-if (getUrlParams(`page`) === null) {
-        pageCount = 1
-}else {
-        pageCount = getUrlParams(`page`)
-}
-page(pageCount,`index`)
+page(getUrlParams(`page`),`index`)
 
 init()
 function init() {

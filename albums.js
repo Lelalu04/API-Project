@@ -1,5 +1,8 @@
-import { appendToContainer_returnFetch,fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { getUrlParams,appendToContainer_returnFetch,fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
+import page from "./page.js";
+
+page(getUrlParams(`page`),`albums`)
 init()
 
 function init() {
@@ -8,7 +11,7 @@ function init() {
 }
 async function renderAlbumsList() {
 
-    let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos`,`albums`)
+    let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos&_page=${getUrlParams(`page`)}&_limit=25`,`albums`)
     let h2 = createElement(`h2`, `Albums List: `)
     let h2Span = createElement(`span`, `(${[...albums.fetchInfo].length})`)
     let createAlbum = createElement('a', `Create Album`)

@@ -1,9 +1,18 @@
-import { fetchData, createElement } from "./function.js";
+import { createElement } from "./function.js";
 
-export default page
+export default cheakOrNull
 
+function cheakOrNull(urlParams, pageUrl) {
+    let pageCount
+    if (urlParams === null) {
+            pageCount = 1
+    }else {
+            pageCount = urlParams
+    }
+    createPageElements(pageCount, pageUrl)
+}
 
-export async function page(page, pageUrl) {
+export async function createPageElements(page, pageUrl) {
     let div = createElement(`div`)
     const currentPage = Number(page)
     const total = 100;

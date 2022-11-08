@@ -2,17 +2,8 @@ import { appendToContainer_returnFetch, createElement, getUrlParams } from "./fu
 import header from "./header.js";
 import page from "./page.js";
 
-let pageCount
-if (getUrlParams(`page`) === null) {
-        pageCount = 1
-}else {
-        pageCount = getUrlParams(`page`)
-}
+page(getUrlParams(`page`),`posts`)
 
-
-page(pageCount, `posts`)
-
-console.log(getUrlParams(`page`))
 let posts = await appendToContainer_returnFetch(`.container-posts`, `https://jsonplaceholder.typicode.com/posts?_page=${getUrlParams(`page`)}&_limit=25`)
 let listH2 = createElement(`h2`, `Posts List: (${posts.fetchInfo.length})`)
 let ul = createElement(`ul`, "", "list-group")
