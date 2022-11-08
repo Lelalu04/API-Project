@@ -2,7 +2,7 @@ import { getUrlParams,appendToContainer_returnFetch,fetchData, createElement, cr
 import header from "./header.js";
 import page from "./page.js";
 
-page(getUrlParams(`page`),`albums`)
+page(getUrlParams(`page`))
 init()
 
 function init() {
