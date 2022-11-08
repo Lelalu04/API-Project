@@ -41,7 +41,7 @@ export function createAlbumsAccordionAddEvent(accordion, post) {
             })
         }
     })
-}  
+}
 export function createCommentsAccordionAddEvent(accordion, post) {
     let commentsAccordionBody_button = accordionBase({
         container: accordion,
@@ -50,45 +50,45 @@ export function createCommentsAccordionAddEvent(accordion, post) {
         accordionContainerId: `comments-albums_${post.id}`,
         ariaLabelledby: `comments_${post.id}`,
         textContent: `Comments`
+        
     })
-    let commentsAccordion;
+    commentsAccordionBody_button[0].setAttribute(`id`, `body-comments`)
+
     commentsAccordionBody_button[1].addEventListener(`click`, async () => {
-        if (!commentsAccordion) {
-            let comments = await fetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
-            commentsAccordion = createContainerAccordion(`comment_${post.id}`)
-            comments.map(comment => {
-
-                let commentAccordionBody_button = accordionBase({
-                    container: commentsAccordion,
-                    headerH: `h3`,
-                    headerIdButtonIdCallapse: `comment_${comment.id}`,
-                    accordionContainerId: `comment_${post.id}`,
-                    ariaLabelledby: `comment_${comment.id}`,
-                    textContent: comment.name
-                })
-
-                let commentBodyP = createElement(`p`, comment.name)
-                let commentEmailP = createPSpanA(`Email: `, comment.email, `mailto:${comment.email}`)
-
-                commentAccordionBody_button[0].append(commentBodyP, commentEmailP)
-                commentsAccordionBody_button[0].append(commentsAccordion)
-            })
+        let bodyComments = document.getElementById(`body-comments`)
+        if (bodyComments.childElementCount === 0) {
+            let commentsAccordion = createContainerAccordion(`comment_${post.id}`)
+            commentsAccordion.classList.add("komentaras");
+            commentsAccordionBody_button[0].append(commentsAccordion)
+            addComment(commentsAccordion, post)
+            console.log(commentsAccordion)
         }
-        // if (postComment){
-        //     let commentAccordionBody_button = accordionBase({
-        //         container: commentsAccordion,
-        //         headerH: `h3`,
-        //         headerIdButtonIdCallapse: `comment_${postComment.id}`,
-        //         accordionContainerId: `comment_${post.id}`,
-        //         ariaLabelledby: `comment_${postComment.id}`,
-        //         textContent: postComment.name
-        //     })
-
-        //     let commentBodyP = createElement(`p`, postComment.name)
-        //     let commentEmailP = createPSpanA(`Email: `, postComment.email, `mailto:${postComment.email}`)
-
-        //     commentAccordionBody_button[0].append(commentBodyP, commentEmailP)
-        //     commentsAccordionBody_button[0].append(commentsAccordion)
-        // }
+        let boolen = JSON.parse(localStorage.getItem(`createdFirstCommentBoolen`))
+        if (boolen) {
+            let accordionComments = document.querySelector(`.komentaras`)
+            addComment(accordionComments, post)
+        }
     })
+
+}
+async function addComment(commentsAccordion, post) {
+    let comments = await fetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
+
+    comments.map(comment => {
+
+        let commentAccordionBody_button = accordionBase({
+            container: commentsAccordion,
+            headerH: `h3`,
+            headerIdButtonIdCallapse: `comment_${comment.id}`,
+            accordionContainerId: `comment_${post.id}`,
+            ariaLabelledby: `comment_${comment.id}`,
+            textContent: comment.name
+        })
+
+        let commentBodyP = createElement(`p`, comment.name)
+        let commentEmailP = createPSpanA(`Email: `, comment.email, `mailto:${comment.email}`)
+
+        commentAccordionBody_button[0].append(commentBodyP, commentEmailP)
+    })
+
 }
