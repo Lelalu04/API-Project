@@ -1,6 +1,16 @@
-import { appendToContainer_returnFetch,firstLetterUpperCase, fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
+import { getUrlParams,appendToContainer_returnFetch,firstLetterUpperCase, fetchData, createElement, createPSpanA, createContainerAccordion, accordionBase } from "./function.js";
 import header from "./header.js";
 import {createAlbumsAccordionAddEvent,createCommentsAccordionAddEvent} from "./addEventListersFunctions.js";
+
+import page from "./page.js";
+
+let pageCount
+if (getUrlParams(`page`) === null) {
+        pageCount = 1
+}else {
+        pageCount = getUrlParams(`page`)
+}
+page(pageCount,`index`)
 
 init()
 function init() {
@@ -9,7 +19,7 @@ function init() {
 }
 async function LoadToDisplay() {
 
-    let posts = await appendToContainer_returnFetch(`.container-home`,`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user`,`post`)
+    let posts = await appendToContainer_returnFetch(`.container-home`,`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&_page=${getUrlParams(`page`)}&_limit=25`,`post`)
 
     posts.fetchInfo.map(post => {
 
