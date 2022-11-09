@@ -69,7 +69,6 @@ export function createCommentsAccordionAddEvent(accordion, post) {
             addComment(accordionComments, post)
         }
     })
-
 }
 async function addComment(commentsAccordion, post) {
     let comments = await fetchData(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
