@@ -1,8 +1,16 @@
-export async function appendToContainer_returnFetch(containerClassName, fetchLink, accordionId) {
+export async function appendToContainer_returnFetch(containerClassName, fetchLink, accordionId,test) {
     let container = document.querySelector(containerClassName)
-    let fetchInfo = await fetchData(fetchLink)
+    let fetchInfo
+    let total = ""
+    if (test = true){
+        let res = await fetch(fetchLink);  
+        fetchInfo = await res.json();
+        total = res.headers.get('x-total-count');
+    }else {
+        fetchInfo = await fetchData(fetchLink)
+    }
 
-    if (accordionId) {
+    if (accordionId || !accordionId === null) {
         let accordion 
         if(fetchInfo.id){
             accordion = createContainerAccordion(accordionId + fetchInfo.id)
@@ -14,13 +22,15 @@ export async function appendToContainer_returnFetch(containerClassName, fetchLin
         let obj = {
             fetchInfo,
             container,
-            accordion
+            accordion,
+            total
         }
         return obj
     }
     let obj = {
         container,
-        fetchInfo
+        fetchInfo,
+        total
     }
     return obj
 }

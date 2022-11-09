@@ -1,4 +1,8 @@
 .pagination-container {
   display: flex;
   gap: 10px;
+}
+
+input.pagination-number {
+  width: 60px;
 }/*# sourceMappingURL=style.css.map */

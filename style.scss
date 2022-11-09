@@ -1,39 +1,8 @@
-.post-container {
-    // border: 2px solid red;
-}
+
 .pagination-container{
     display: flex;
     gap: 10px;
 }
-.pagination-number{
-    
+input.pagination-number {
+    width: 60px;
 }
-.accordion-button {}
-
-// .container-posts {
-//     display: flex;
-//     flex-direction: column;
-
-//     .accordion-item {
-//         .accordion-header {
-//             margin-bottom: 0px;
-
-//         }
-        
-//         .hide {
-//             display: none;
-
-//         }
-//         .show {
-//             display: block;
-//             // height: 200px;
-//         }
-
-//         .accordion-button {
-//             width: 100%;
-//             height: 50px;
-//             // margin-bottom: 0px;
-//         }
-//     }
-
-// }

@@ -2,8 +2,7 @@ import { getUrlParams,appendToContainer_returnFetch,fetchData, createElement, cr
 import header from "./header.js";
 import page from "./page.js";
 
-let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
-page(getUrlParams(`page`), limit)
+
 init()
 
 function init() {
@@ -12,9 +11,16 @@ function init() {
 }
 async function renderAlbumsList() {
 
-    let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos&_page=${getUrlParams(`page`)}&_limit=${limit}`,`albums`)
+    let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
+
+    let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos&_page=${getUrlParams(`page`)}&_limit=${limit}`,`albums`,true)
+    let total = albums.total
+page(getUrlParams(`page`), limit, total)
+    
+    
+    
     let h2 = createElement(`h2`, `Albums List: `)
-    let h2Span = createElement(`span`, `(${[...albums.fetchInfo].length})`)
+    let h2Span = createElement(`span`, `(${total})`)
     let createAlbum = createElement('a', `Create Album`)
     createAlbum.setAttribute(`href`, `./create-album.html`)
     h2.append(h2Span)

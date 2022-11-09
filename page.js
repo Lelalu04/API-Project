@@ -2,7 +2,7 @@ import { createElement } from "./function.js";
 
 export default cheakOrNull
 
-function cheakOrNull(urlParams, limit) {
+function cheakOrNull(urlParams, limit, total) {
     let pageCount
     if (urlParams === null) {
         pageCount = 1
@@ -28,7 +28,8 @@ function cheakOrNull(urlParams, limit) {
                 page: pageCount,
                 limit,
                 div,
-                value: numberInput.value
+                value: numberInput.value,
+                total
             })
             
         }, 2000)
@@ -37,12 +38,13 @@ function cheakOrNull(urlParams, limit) {
         page: pageCount,
         limit,
         div,
-        value: numberInput.value
+        value: numberInput.value,
+        total
     })
 }
 
 export async function createPageElements(obj) {
-    let { page, limit, div, value } = obj
+    let { page, limit, div, value, total } = obj
     let pagination = document.querySelectorAll(`.pagination`)
 
     if (!pagination.length == 0) {
@@ -52,7 +54,7 @@ export async function createPageElements(obj) {
     }
 
     const currentPage = Number(page)
-    const total = 100;
+    
     const pages = Math.ceil(total / limit);
 
     let firstPage = createPageElement({

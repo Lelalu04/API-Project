@@ -4,18 +4,21 @@ import {createAlbumsAccordionAddEvent,createCommentsAccordionAddEvent} from "./a
 
 import page from "./page.js";
 
-let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
-page(getUrlParams(`page`), limit)
 
 init()
 function init() {
     LoadToDisplay()
-    header()
+    
 }
 async function LoadToDisplay() {
-
-    let posts = await appendToContainer_returnFetch(`.container-home`,`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&_page=${getUrlParams(`page`)}&_limit=${limit}`,`post`)
-
+    let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
+    
+    let posts = await appendToContainer_returnFetch(`.container-home`,`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&_page=${getUrlParams(`page`)}&_limit=${limit}`,`post`, true)
+    
+    let total = posts.total
+    page(getUrlParams(`page`), limit, total)
+    header()
+    
     posts.fetchInfo.map(post => {
 
         let postAccordionBody_button = accordionBase({
