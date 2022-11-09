@@ -1,12 +1,18 @@
-import { createElement,createElementAInnerLi,appendToContainer_returnFetch } from "./function.js";
+import { getUrlParams,createElement,createElementAInnerLi,appendToContainer_returnFetch } from "./function.js";
 import header from "./header.js";
 init()
+import page from "./page.js";
+
+
 
 function init() {
-    renderUsersList()
+    let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
+page(getUrlParams(`page`), limit)
+    renderUsersList(limit)
+
 }
-async function renderUsersList() {
-    let users = await appendToContainer_returnFetch(`.container-users`,`https://jsonplaceholder.typicode.com/users/?_embed=posts`)
+async function renderUsersList(limit) {
+    let users = await appendToContainer_returnFetch(`.container-users`,`https://jsonplaceholder.typicode.com/users/?_embed=posts&_page=${getUrlParams(`page`)}&_limit=${limit}`)
 
     let listH2 = createElement(`h2`, `Users List: (${users.fetchInfo.length})`)
 

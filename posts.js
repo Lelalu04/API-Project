@@ -2,9 +2,13 @@ import { appendToContainer_returnFetch, createElement, getUrlParams } from "./fu
 import header from "./header.js";
 import page from "./page.js";
 
-page(getUrlParams(`page`),`posts`)
+let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
+page(getUrlParams(`page`), limit)
 
-let posts = await appendToContainer_returnFetch(`.container-posts`, `https://jsonplaceholder.typicode.com/posts?_page=${getUrlParams(`page`)}&_limit=25`)
+        console.log(getUrlParams(`_limit`))
+
+
+let posts = await appendToContainer_returnFetch(`.container-posts`, `https://jsonplaceholder.typicode.com/posts?_page=${getUrlParams(`page`)}&_limit=${limit}`)
 let listH2 = createElement(`h2`, `Posts List: (${posts.fetchInfo.length})`)
 let ul = createElement(`ul`, "", "list-group")
 // console.dir(posts)

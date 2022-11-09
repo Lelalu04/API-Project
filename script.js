@@ -4,7 +4,8 @@ import {createAlbumsAccordionAddEvent,createCommentsAccordionAddEvent} from "./a
 
 import page from "./page.js";
 
-page(getUrlParams(`page`),`index`)
+let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
+page(getUrlParams(`page`), limit)
 
 init()
 function init() {
@@ -13,7 +14,7 @@ function init() {
 }
 async function LoadToDisplay() {
 
-    let posts = await appendToContainer_returnFetch(`.container-home`,`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&_page=${getUrlParams(`page`)}&_limit=25`,`post`)
+    let posts = await appendToContainer_returnFetch(`.container-home`,`https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&_page=${getUrlParams(`page`)}&_limit=${limit}`,`post`)
 
     posts.fetchInfo.map(post => {
 

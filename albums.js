@@ -2,7 +2,8 @@ import { getUrlParams,appendToContainer_returnFetch,fetchData, createElement, cr
 import header from "./header.js";
 import page from "./page.js";
 
-page(getUrlParams(`page`))
+let limit = getUrlParams(`_limit`) ?  getUrlParams(`_limit`) : 10
+page(getUrlParams(`page`), limit)
 init()
 
 function init() {
@@ -11,7 +12,7 @@ function init() {
 }
 async function renderAlbumsList() {
 
-    let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos&_page=${getUrlParams(`page`)}&_limit=25`,`albums`)
+    let albums = await appendToContainer_returnFetch(`.container-albums`,`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos&_page=${getUrlParams(`page`)}&_limit=${limit}`,`albums`)
     let h2 = createElement(`h2`, `Albums List: `)
     let h2Span = createElement(`span`, `(${[...albums.fetchInfo].length})`)
     let createAlbum = createElement('a', `Create Album`)

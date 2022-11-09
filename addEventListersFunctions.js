@@ -14,7 +14,6 @@ export function createAlbumsAccordionAddEvent(accordion, post) {
     let albumsAccordion;
     albumsAccordionBody_button[1].addEventListener(`click`, async () => {
         if (!albumsAccordion) {
-
             let albums = await fetchData(`https://jsonplaceholder.typicode.com/users/` + post.userId + `/albums?_embed=photos`)
             albumsAccordion = createContainerAccordion(`album_${post.id}`)
             albums.map((album) => {
